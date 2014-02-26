@@ -3,11 +3,11 @@ blind-solvency-proof
 
 My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac
 
-= Sample output
+## Sample output
 
 
 ```
-test$ node ./bsolp.js                                                                           *[master][]
+test$ node ./bsolp.js
 
 Private tree:
 
