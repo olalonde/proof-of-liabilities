@@ -3,10 +3,26 @@ blind-solvency-proof
 
 My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac
 
-## Sample output
-
+## Usage
 
 ```
+# Create private merkle tree from an accounts file (see
+# test/account.json for format)
+
+$ ./cli.js privatetree -f test/accounts.json > private.json
+
+# Extract public tree for user mark.
+
+$ ./cli.js publictree mark -f private.json --human
+
+# Extract root node hash and value
+
+$ ./cli.js root -f private.json --human
+```
+
+
+## some sample outputs
+
 test$ node ./bsolp.js
 
 Private tree:

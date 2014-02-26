@@ -1,5 +1,5 @@
 var Tree = require('../tree'),
-  accounts = require('../accounts');
+  accounts = require('./accounts');
 
 var tree = Tree.fromArray(accounts);
 

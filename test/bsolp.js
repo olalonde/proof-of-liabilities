@@ -1,7 +1,7 @@
 // Blind solvency prover
 
-var bsolp = require('../bsolp'),
-  accounts = require('../accounts.json');
+var bsolp = require('../lib/bsolp'),
+  accounts = require('./accounts.json');
 
 var private_tree = bsolp.generatePrivateTree(accounts);
 
