@@ -1,7 +1,7 @@
 blind-solvency-proof
 ====================
 
-My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac. Some discussion here: http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/
+My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac. Some discussion here: http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/ and here: https://news.ycombinator.com/item?id=7277865
 
 This is a proof of concept and not recommended for production yet. I
 might also rename the project to blind-libability-proof to avoid
