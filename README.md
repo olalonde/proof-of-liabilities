@@ -5,6 +5,8 @@ My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-r
 
 This is a proof of concept and not recommended for production yet. I think it might be a good idea to rename the project to blind-liability-proof as it seems more descriptive.
 
+Beer fund: 1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx
+
 ## Usage
 
 ```
