@@ -3,6 +3,10 @@ blind-solvency-proof
 
 My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac
 
+This is a proof of concept and not recommended for production yet. I
+might also rename the project to blind-libability-proof to avoid
+confusion as this is what it really does.
+
 ## Usage
 
 ```
