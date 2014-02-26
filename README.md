@@ -3,7 +3,7 @@ blind-solvency-proof
 
 My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-reserves-are scheme" https://iwilcox.me.uk/v/nofrac. Some discussion here: http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/ and here: https://news.ycombinator.com/item?id=7277865. Example of how a shared wallet could use the CLI: http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/cfp50ib
 
-This is a proof of concept and not recommended for production yet. I think it might be a good idea to rename the project to blind-liability-proof as it seems more accurate.
+This is a proof of concept and not recommended for production yet. I think it might be a good idea to rename the project to blind-liability-proof as it seems more descriptive.
 
 ## Usage
 
