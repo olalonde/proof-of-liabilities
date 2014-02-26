@@ -21,8 +21,9 @@ $ ./cli.js root -f private.json --human
 ```
 
 
-## some sample outputs
+## Some sample outputs
 
+```
 test$ node ./bsolp.js
 
 Private tree:
