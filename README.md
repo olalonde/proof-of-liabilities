@@ -9,15 +9,21 @@ My attempt at implementing gmaxwell's "prove-how-(non)-fractional-your-Bitcoin-r
 # Create private merkle tree from an accounts file (see
 # test/account.json for format)
 
+$ ./cli.js privatetree -f test/accounts.json --human
 $ ./cli.js privatetree -f test/accounts.json > private.json
 
 # Extract public tree for user mark.
 
 $ ./cli.js publictree mark -f private.json --human
+$ ./cli.js publictree mark -f private.json > mark.json
 
-# Extract root node hash and value
+# Display root node hash and value
 
 $ ./cli.js root -f private.json --human
+
+# Verify public tree
+
+$ ./cli.js verify --hash SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU= --value 37618 -f mark.json
 ```
 
 

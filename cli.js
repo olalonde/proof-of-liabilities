@@ -69,4 +69,43 @@ program
     }
   });
 
+program
+  .command('verify')
+  .description('Verify a public tree. Must specify root hash + value and public tree file.')
+  .option('--hash <hash>', 'Hash of root node')
+  .option('--value <value>', 'Value of root node', parseFloat)
+  .action(function (action) {
+    if (!program.file) program.help();
+
+    var tree = Tree.deserialize(fs.readFileSync(program.file));
+    var root = tree.root();
+
+    var expected_root_data = {
+      value: action.value,
+      hash: action.hash
+    };
+
+    // @TODO refactor all following verification code to a library function
+
+    // Make sure root matches
+    if (root.data.value !== expected_root_data.value || root.data.hash !== expected_root_data.hash) {
+      console.error('Root mismatch!');
+      console.error('Expected:');
+      console.error(expected_root_data);
+      console.error('Got:');
+      console.error(root.data);
+      process.exit();
+    }
+
+    var success = bsolp.verifyTree(tree);
+
+    if (success) {
+      console.log('Public tree verified successfuly!');
+    }
+    else {
+      console.log('INVALID public tree!');
+      process.exit(-1);
+    }
+  });
+
 program.parse(process.argv);
