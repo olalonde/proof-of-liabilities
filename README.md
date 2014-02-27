@@ -259,6 +259,10 @@ $ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJ
 Partial tree verified successfuly!
 ```
 
+## Sites who implement blind-liability-proof
+
+Make a pull request if you would like your site listed here.
+
 ## References
 
 - [Reddit announcement](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/)
