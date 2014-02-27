@@ -15,6 +15,8 @@ will be described in details eventually.
 Chrome extension for automated proof verification by end users:
 https://github.com/olalonde/blproof-extension/ 
 
+![blind liability proof extension screenshot](http://i.minus.com/jCWMC93dAOkPh.png)
+
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
 ## Install
