@@ -261,9 +261,9 @@ $ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJ
 Partial tree verified successfuly!
 ```
 
-## Sites who implement blind-liability-proof
+## Sites that implement blind-liability-proof
 
-Make a pull request if you would like your site listed here.
+Send a pull request if you would like your site listed here.
 
 ## References
 
