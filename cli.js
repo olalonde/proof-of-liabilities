@@ -23,8 +23,8 @@ program
   .option('-h, --human', 'Print in human readable format instead of serializing.');
 
 program
-  .command('privatetree')
-  .description('Generates private tree. Must specify accounts file. See test/accounts.json for format.')
+  .command('completetree')
+  .description('Generates complete proof tree. Must specify accounts file. See test/accounts.json for format.')
   .action(function () {
     if (!program.file) program.help();
 
@@ -40,8 +40,8 @@ program
   });
 
 program
-  .command('publictree <user>')
-  .description('Extracts public tree for a given user. Must specify private tree file.')
+  .command('partialtree <user>')
+  .description('Extracts the partial proof tree for a given user. Must specify complete proof tree file.')
   .action(function (user) {
     if (!program.file) program.help();
     if (!user) program.help();
@@ -59,7 +59,7 @@ program
 
 program
   .command('root')
-  .description('Extracts root node from private tree. Must specify private tree file.')
+  .description('Extracts root node from tree. Must specify complete proof tree file.')
   .action(function () {
     if (!program.file) program.help();
 
@@ -77,7 +77,7 @@ program
 
 program
   .command('verify')
-  .description('Verify a public tree. Must specify root hash + value and public tree file.')
+  .description('Verify a partial proof tree. Must specify root hash and value. Must specify the partial proof tree file.')
   .option('--hash <hash>', 'Hash of root node')
   .option('--value <value>', 'Value of root node', parseFloat)
   .action(function (action) {
@@ -106,10 +106,11 @@ program
     var success = bsolp.verifyTree(tree);
 
     if (success) {
-      console.log('Public tree verified successfuly!');
+      console.log('Partial tree verified successfuly!');
+      // @TODO: show user and value
     }
     else {
-      console.log('INVALID public tree!');
+      console.log('INVALID partial tree!');
       process.exit(-1);
     }
   });

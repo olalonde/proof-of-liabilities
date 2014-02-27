@@ -6,9 +6,9 @@ scheme"](https://iwilcox.me.uk/v/nofrac).
 
 This project only implements
 the "liability" part of the solvency proof (how many bitcoins the
-operator SHOULD have - thier liabilities). 
+operator **SHOULD** have - thier liabilities). 
 
-The proof that the operator DOES have the funds to cover all its liabilities 
+The proof that the operator **DOES** have the assets to cover all its liabilities 
 can be done using Bitcoin's signmessage feature. The complete scheme
 will be described in details eventually.
  
@@ -23,24 +23,24 @@ npm install blproof
 ## CLI Usage
 
 ```
-# Create private merkle tree from an accounts file (see
+# Create complete proof tree from an accounts file (see
 # test/account.json for format)
 
-$ blproof privatetree -f test/accounts.json --human
-$ blproof privatetree -f test/accounts.json > private.json
+$ blproof completetree -f test/accounts.json --human
+$ blproof completetree -f test/accounts.json > complete.out.json
 
-# Extract public tree for user mark.
+# Extract partial tree for user mark.
 
-$ blproof publictree mark -f private.json --human
-$ blproof publictree mark -f private.json > mark.json
+$ blproof partialtree mark -f complete.out.json --human
+$ blproof partialtree mark -f complete.out.json > mark.out.json
 
 # Display root node hash and value
 
-$ blproof root -f private.json --human
+$ blproof root -f complete.out.json --human
 
-# Verify public tree
+# Verify partial tree
 
-$ blproof verify --hash SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU= --value 37618 -f mark.json
+$ blproof verify --hash "SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=" --value 37618 -f mark.out.json
 ```
 
 ## Definitions
@@ -110,7 +110,7 @@ they can verify the proof.
 ## Some sample outputs
 
 ```
-$ ./cli.js privatetree -f test/accounts.json --human
+$ ./cli.js completetree -f test/accounts.json --human
 37618, ARoRyENGrJyGieLK79OuQWuSE/1znzOLyWAOYmAECOw=
  |_ 24614, PgWlVmieGIUq+g3l0H/+er8BXaA0mNjc8jcxc8uTIZg=
  | |_ 21072, WpPDcPcLHyRqzKnvYXAvipVFPplDzgKtZqqRJz3BO94=
@@ -145,9 +145,9 @@ $ ./cli.js privatetree -f test/accounts.json --human
        |_ 68, stacy, 0.24734967038966715, 4hv2lQy2lCN6Z3y70empHCWIBmzJ7lebeFjIub0mgMg=
        |_ 3, justin, 0.786616450175643, jB+xQC8s8IGL9cB+R9I2zEGGOAMV723LcM8/SnYC5ps=
 
-$ ./cli.js privatetree -f test/accounts.json > complete.out.json
+$ ./cli.js completetree -f test/accounts.json > complete.out.json
 
-$ ./cli.js publictree mark -f complete.out.json --human
+$ ./cli.js partialtree mark -f complete.out.json --human
 37618, 2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=
  |_ 24614, vZRQ3uGn4Kr4490RcjN6a7ddZjDtiP09MFXGPVtHdTE=
  |_ 13004, pTk3eTymd+Eee6hIsw9pImID+QlkRa3ro8QCaaUMn+E=
@@ -158,13 +158,13 @@ $ ./cli.js publictree mark -f complete.out.json --human
    |   |_ 462, mark, 0.9704850744456053, g3F8hhQ5YGIzsBz5YeoQpOeZHXEIDneMdHTd9/TiyBM=
    |_ 3103, /I8csAnivlstZvjS+1C5ecbEt3rm4SbLOFdm5fwewjE=
 
-$ ./cli.js publictree mark -f complete.out.json > partial.out.json
+$ ./cli.js partialtree mark -f complete.out.json > partial.out.json
 
 $ ./cli.js root -f complete.out.json
 {"value":37618,"hash":"2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug="}
 
 $ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=" -f partial.out.json
-Public tree verified successfuly!
+Partial tree verified successfuly!
 ```
 
 ## References
