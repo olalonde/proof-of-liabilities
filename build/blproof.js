@@ -1839,10 +1839,9 @@ module.exports = function sha256(buf) {
 };
 
 },{"./helpers":4}],10:[function(_dereq_,module,exports){
-module.exports.Tree = _dereq_('./lib/tree');
-module.exports.bsolp = _dereq_('./lib/bsolp');
+module.exports = _dereq_('./lib/blproof');
 
-},{"./lib/bsolp":11,"./lib/tree":12}],11:[function(_dereq_,module,exports){
+},{"./lib/blproof":11}],11:[function(_dereq_,module,exports){
 var Tree = _dereq_('./tree'),
   crypto = _dereq_('crypto');
 
@@ -1966,7 +1965,7 @@ function verify_tree (tree, expected_root_data) {
   if (!tree)
     throw new Error('You must provide the partial tree as a first argument.');
 
-  if (!expected_root_data) 
+  if (!expected_root_data)
     throw new Error('You must provide expected root data hash as a second argument.');
 
   var root = tree.root();
@@ -2028,6 +2027,7 @@ function verify_tree (tree, expected_root_data) {
 
 }
 
+module.exports.Tree = Tree;
 module.exports.generateCompleteTree = generate_complete_tree;
 module.exports.extractPartialTree = extract_partial_tree;
 module.exports.verifyTree = verify_tree;
@@ -2238,7 +2238,8 @@ Tree.prototype.serialize = function (node) {
 
 Tree.deserialize = function (str) {
   var tree = new Tree();
-  var graph = (typeof str === 'object') ? str: JSON.parse(str);
+  // @TODO: browser bug when $.ajax already parses response
+  var graph = JSON.parse(str);
   tree.fromObjectGraph(graph);
   return tree;
 };

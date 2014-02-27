@@ -6,7 +6,7 @@ var program = require('commander'),
   path = require('path'),
   fs = require('fs-extra'),
   Tree = require('./lib/tree'),
-  bsolp = require('./lib/bsolp');
+  blproof = require('./lib/blproof');
 
 function format (node) {
   var data = node.data;
@@ -38,7 +38,7 @@ program
     if (!program.file) program.help();
 
     var accounts = JSON.parse(fs.readFileSync(program.file));
-    var complete_tree = bsolp.generateCompleteTree(accounts);
+    var complete_tree = blproof.generateCompleteTree(accounts);
 
     if (program.human) {
       complete_tree.prettyPrint(format);
@@ -56,7 +56,7 @@ program
     if (!user) program.help();
 
     var complete_tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
-    var partial_tree = bsolp.extractPartialTree(complete_tree, user);
+    var partial_tree = blproof.extractPartialTree(complete_tree, user);
     //console.log(util.inspect(partial_tree, { depth: null }));
 
     if (program.human) {
@@ -106,7 +106,7 @@ program
       root_data = { value: action.value, hash: action.hash };
     }
 
-    var result = bsolp.verifyTree(tree, root_data);
+    var result = blproof.verifyTree(tree, root_data);
 
     if (result.success) {
       console.log('Partial tree verified successfuly!');
@@ -134,7 +134,7 @@ program
     var accounts = JSON.parse(fs.readFileSync(program.file));
     var len = accounts.length;
 
-    var complete_tree = bsolp.generateCompleteTree(accounts);
+    var complete_tree = blproof.generateCompleteTree(accounts);
 
     complete_tree.prettyPrint(format);
    
@@ -157,7 +157,7 @@ program
         log(accounts);
 
         async.eachLimit(accounts, limit, function (account, cb) {
-          var partial_tree = bsolp.extractPartialTree(complete_tree, account.user);
+          var partial_tree = blproof.extractPartialTree(complete_tree, account.user);
 
           log('Processing ' + account.user);
           if (program.verbose) partial_tree.prettyPrint(format);
