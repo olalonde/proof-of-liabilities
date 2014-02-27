@@ -150,11 +150,11 @@ Nodes have the following format:
 
 `<node_data>` is an object which must contain the following keys:
 
-- `value` <number>
-- `hash` <string>
-- `user` <string> (optional) Only the node belonging to the user this partial tree
+- `value` number
+- `hash` string
+- `user` string (optional) Only the node belonging to the user this partial tree
   was generated for should have this key set.
-- `nonce` <number> (optional) Only the node belonging to the user this partial tree
+- `nonce` number (optional) Only the node belonging to the user this partial tree
   was generated for should have this key set.
 
 ## Some sample outputs
