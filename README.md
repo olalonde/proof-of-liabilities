@@ -110,57 +110,61 @@ they can verify the proof.
 ## Some sample outputs
 
 ```
-test$ node ./bsolp.js
+$ ./cli.js privatetree -f test/accounts.json --human
+37618, ARoRyENGrJyGieLK79OuQWuSE/1znzOLyWAOYmAECOw=
+ |_ 24614, PgWlVmieGIUq+g3l0H/+er8BXaA0mNjc8jcxc8uTIZg=
+ | |_ 21072, WpPDcPcLHyRqzKnvYXAvipVFPplDzgKtZqqRJz3BO94=
+ | | |_ 4167, nvTw6l/trAzY07BJW7XLFZ8w9EGtK65UEO95c5b9UPA=
+ | | | |_ 122, LD2m4AZBVNuTBazJfYf31hIvIB5WA+oZ0jeqlJnzMe4=
+ | | | | |_ 39, einstein, 0.27035144134424627, NuW19GTHeDh8kem5E/DfFdDHWVzELqVak6IuuIGR+Ck=
+ | | | | |_ 83, picasso, 0.19446203880943358, EI3jlqZjR74zphiajQHDsmAXb8/qEgofHyHysiS5sAc=
+ | | | |_ 4045, olalonde, 0.323900283081457, h3N10zqNemNHMJ31aqLUNCUQ7rxQFRkRzz1Mayyz2cI=
+ | | |_ 16905, SvJCozx3KLid8gyChfCQSNJe5W6Kf6AZy1sTAuQ1LAU=
+ | |   |_ 6905, gmaxwell, 0.7565273905638605, 5Crv8D6gIPVcwaRuEL1CPj/6KvvQkuMcPkPO6JnpdZg=
+ | |   |_ 10000, satoshi, 0.7995808166451752, F8dXs5Cf/IlFSxpuAU2idJrVLt9B0H/o4dgO8cMI5mA=
+ | |_ 3542, CZcqeTmpSRNVj6OoGzesDsfJThLLuGZU5oI+lBRuimw=
+ |   |_ 3327, M1BxypagXgZDXEIDIjOpNOrG1yQPnYGR2AnghBSXJf8=
+ |   | |_ 300, luke-jr, 0.552029364509508, afE1DC5LV0y6WfZuiC5H5+yq3mKSBlJJuQr/Yj4mtes=
+ |   | |_ 3027, sipa, 0.8273184080608189, v3ul5BLGkLU0sOaMAMNXHUP6q8wYvXzB+yUrIujHe7I=
+ |   |_ 215, 68oIqC3/xs90UDrIY2R8UaJ/sbZYqevMGal6845UDJs=
+ |     |_ 200, codeshark, 0.9785103949252516, K4OBBdecagopyk+MVyeH15R19Zj3GTB0llG5Dm1bvOg=
+ |     |_ 15, gribble, 0.06026308285072446, qGifo7VltIcTX1aFmdl5KEXB/3HI6OgYgU8gF0oUgoQ=
+ |_ 13004, b6nOnnYmEOCR6LmdfG2KUeXjudfla97B6CaMUUKNN60=
+   |_ 9901, pgpCn3hILMxj01Dba3zJ9TsQwepRcEBdJHoAV4ywx64=
+   | |_ 12, +QaapnLGXcJ3Hjya8Xo1Ju89fn5FgB2ViPvjcrUO9EM=
+   | | |_ 0, alice, 0.16321996343322098, uNKPPjtmNpeX19AJg0DTt6F9l1Hta2H7miQxqgtHtgs=
+   | | |_ 12, bob, 0.45615525753237307, UUhgdge7KiWplNdCNMG1lW05aQgnGdY5kuDcceCyujA=
+   | |_ 9889, 5M/VQ9wGbg4xFmLZMRcNr6qpkt9P7fRuCHQEv3ovha0=
+   |   |_ 9427, charlie, 0.5375598601531237, 91R6nQU+uOE63+PiAmj3SQXL6CPaF1SFDgbYSJImBtk=
+   |   |_ 462, mark, 0.6156334422994405, KV1Rx2kmM3PZkp6vVJ0Dc8Rgj/6bOuxNmp941hIHmqc=
+   |_ 3103, jrhEVauiHrtRFsfRLPfL/TdoNalXD52eOaPONAJlO0g=
+     |_ 3032, GIehVY5ZEwefbBBvP2LXN551RbDFicdmHLlu2LWPa9E=
+     | |_ 12, anax, 0.7285208490211517, MD6AkV09BiyJPNPgNbdqYmUJgj0l1vUcIwolKIBA4Kg=
+     | |_ 3020, gavin, 0.34977371199056506, y2lMSrLc8M5LPVV062iNib0P5we9gXtV8fxWYGZx9vU=
+     |_ 71, Oy1k8UR/dVPhODv8cFxm6/4oZReoMCK30DgmCcLxAws=
+       |_ 68, stacy, 0.24734967038966715, 4hv2lQy2lCN6Z3y70empHCWIBmzJ7lebeFjIub0mgMg=
+       |_ 3, justin, 0.786616450175643, jB+xQC8s8IGL9cB+R9I2zEGGOAMV723LcM8/SnYC5ps=
 
-Private tree:
+$ ./cli.js privatetree -f test/accounts.json > complete.out.json
 
-37618, SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=
- |_ 24614, uI5UdCraTo11wXQBED8hLN3VQnAPEZGRxMBC65NHfwU=
- | |_ 21072, jG3EVyBXVbVDWmELKyN6Bhr+tcJg73zkvanchWiWAuc=
- | | |_ 4167, tyHBvBgE8dzl1wZPrhJ7s3xrHE8NqOBHT5Gfyneop4U=
- | | | |_ 122, fBKXXjlikszxj1pP3vKf0BWTj9yeFTs+cuc+TAzqJwo=
- | | | | |_ 39, einstein
- | | | | |_ 83, picasso
- | | | |_ 4045, olalonde
- | | |_ 16905, z0AQfe2Xv+ZmZWaB6Cl4Tn1nixpf4KSnQoadl+KKjj4=
- | |   |_ 6905, gmaxwell
- | |   |_ 10000, satoshi
- | |_ 3542, 3EXM/8Q8JAJihU3nX3AdD1WgkXDrNeQgh0MRBJ6k60k=
- |   |_ 3327, HbDV2lywYbZlXiTmx27PU5YjAHMPAr6rKlIjFfEgxBg=
- |   | |_ 300, luke-jr
- |   | |_ 3027, sipa
- |   |_ 215, TxnypBHTR+aXh6ozKd5pnicdlEcBfVNLuXvuZb8cUhU=
- |     |_ 200, codeshark
- |     |_ 15, gribble
- |_ 13004, iaMffeZYdyGXcP4VKA5NIBWQeAlz8b2am4m7GR4pL8A=
-   |_ 9901, GHuVUeCtEsr0o1PzDzEzNds6Qf1B334hKErZI9KybqE=
-   | |_ 12, ReggpH0fv+rmTnLX3sfqLx21rEdoLaD5zJqst5C/ncM=
-   | | |_ 0, alice
-   | | |_ 12, bob
-   | |_ 9889, SQswAyEUWZ5VoAwhIirvyE3IKDy+b64pZU9ZBv3sWT4=
-   |   |_ 9427, charlie
-   |   |_ 462, mark
-   |_ 3103, SBk/MZZOWokTzs3K36ncgNoipsfi8Ua/LnPfoUemQts=
-     |_ 3032, o+rBE22dMf3jI0SVGajIxt4a6ImyJq9V1cmvk9eSmhI=
-     | |_ 12, anax
-     | |_ 3020, gavin
-     |_ 71, aRFnO4wgjO3q4qgbF3pqvkSlZHKQQAx+UnBviwAo84M=
-       |_ 68, stacy
-       |_ 3, justin
+$ ./cli.js publictree mark -f complete.out.json --human
+37618, 2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=
+ |_ 24614, vZRQ3uGn4Kr4490RcjN6a7ddZjDtiP09MFXGPVtHdTE=
+ |_ 13004, pTk3eTymd+Eee6hIsw9pImID+QlkRa3ro8QCaaUMn+E=
+   |_ 9901, WNH+sUQcyV9VECsnFSrVUmpdJ7+d0XAVpClonR9osZI=
+   | |_ 12, eP0+1iEkq0uJJQLD4bZbn8duggxNUdoSHsPbjPYL5Ng=
+   | |_ 9889, wY6rZAEZvn2Ts9UxcEB22dbnxD01LHKCX9em45tboq4=
+   |   |_ 9427, charlie, 0.6493051161523908, 4P3d/9OMhV2otvzmc0wxNt2FXYwMaA2ANt8Grm5iLuI=
+   |   |_ 462, mark, 0.9704850744456053, g3F8hhQ5YGIzsBz5YeoQpOeZHXEIDneMdHTd9/TiyBM=
+   |_ 3103, /I8csAnivlstZvjS+1C5ecbEt3rm4SbLOFdm5fwewjE=
 
-Root hash: SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=
-Root value: 37618
-Extracting tree for mark:
+$ ./cli.js publictree mark -f complete.out.json > partial.out.json
 
-37618, SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=
- |_ 24614, uI5UdCraTo11wXQBED8hLN3VQnAPEZGRxMBC65NHfwU=
- |_ 13004, iaMffeZYdyGXcP4VKA5NIBWQeAlz8b2am4m7GR4pL8A=
-   |_ 9901, GHuVUeCtEsr0o1PzDzEzNds6Qf1B334hKErZI9KybqE=
-   | |_ 12, ReggpH0fv+rmTnLX3sfqLx21rEdoLaD5zJqst5C/ncM=
-   | |_ 9889, SQswAyEUWZ5VoAwhIirvyE3IKDy+b64pZU9ZBv3sWT4=
-   |   |_ 9427, charlie
-   |   |_ 462, mark
-   |_ 3103, SBk/MZZOWokTzs3K36ncgNoipsfi8Ua/LnPfoUemQts=
+$ ./cli.js root -f complete.out.json
+{"value":37618,"hash":"2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug="}
+
+$ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=" -f partial.out.json
+Public tree verified successfuly!
 ```
 
 ## References
