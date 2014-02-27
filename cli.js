@@ -84,33 +84,24 @@ program
     if (!program.file) program.help();
 
     var tree = Tree.deserialize(fs.readFileSync(program.file));
+
     var root = tree.root();
 
-    var expected_root_data = {
-      value: action.value,
-      hash: action.hash
-    };
+    var root_data = { value: action.value, hash: action.hash };
 
-    // @TODO refactor all following verification code to a library function
+    var result = bsolp.verifyTree(tree, root_data);
 
-    // Make sure root matches
-    if (root.data.value !== expected_root_data.value || root.data.hash !== expected_root_data.hash) {
-      console.error('Root mismatch!');
-      console.error('Expected:');
-      console.error(expected_root_data);
-      console.error('Got:');
-      console.error(root.data);
-      process.exit();
-    }
-
-    var success = bsolp.verifyTree(tree);
-
-    if (success) {
+    if (result.success) {
       console.log('Partial tree verified successfuly!');
+      console.log('Your user is ' + result.data.user + 
+                  ' and your balance is ' + result.data.value);
       // @TODO: show user and value
     }
     else {
       console.log('INVALID partial tree!');
+      if (result.error) {
+        console.log(result.error);
+      }
       process.exit(-1);
     }
   });
