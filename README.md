@@ -169,8 +169,8 @@ Partial tree verified successfuly!
 
 ## References
 
-[Reddit announcement](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/)
-[HN post](https://news.ycombinator.com/item?id=7277865)
-[Example of how a shared wallet website could use the CLI](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/cfp50ib)
+- [Reddit announcement](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/)
+- [HN post](https://news.ycombinator.com/item?id=7277865)
+- [Example of how a shared wallet website could use the CLI](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/cfp50ib)
 
 
