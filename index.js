@@ -1,1 +1,2 @@
-console.log('run test/bsolp.js');
+module.exports.Tree = require('./lib/tree');
+module.exports.bsolp = require('./lib/bsolp');
