@@ -11,7 +11,9 @@
     "async": "~0.2.10",
     "fs-extra": "~0.8.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "crypto-browserify": "~2.1.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

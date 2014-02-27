@@ -11,8 +11,11 @@ operator **SHOULD** have - thier liabilities).
 The proof that the operator **DOES** have the assets to cover all its liabilities 
 can be done using Bitcoin's signmessage feature. The complete scheme
 will be described in details eventually.
- 
-Beer fund: 1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx
+
+Chrome extension for automated proof verification by end users:
+https://github.com/olalonde/blproof-extension/ 
+
+Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
 ## Install
 
@@ -62,6 +65,12 @@ $ blproof root -f complete.out.json --human
 
 $ blproof verify --hash "SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=" --value 37618 -f mark.out.json
 ```
+
+## Library usage
+
+See `cli.js`. 
+
+Browser build: `browserify index.js --standalone blproof > build/blproof.js`.
 
 ## Definitions
 
