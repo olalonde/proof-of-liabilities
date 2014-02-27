@@ -21,6 +21,8 @@ Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
 ## Install
 
+[Install Node.js](http://nodejs.org/)
+
 ```
 npm install -g blproof
 ```
