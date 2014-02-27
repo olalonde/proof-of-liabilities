@@ -33,6 +33,7 @@ Simple usage:
 # Generate a partial tree for all users in accounts.json.
 # Partial trees will be saved to partial_trees/ directory.
 # complete_tree.json and root.json will be saved to current directory.
+# For a sample accounts file, refer to test/accounts.json.
 
 $ blproof generate -f accounts.json
 
