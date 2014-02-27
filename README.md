@@ -107,6 +107,56 @@ sibling which is also a leaf node must be stripped of its `user` and
 Partial trees should be disclosed privately to each individual users so
 they can verify the proof.
 
+## Serialized data formats (work in progress / draft)
+
+This section is intended to standardize the way root nodes and trees are
+distributed in order to make implementations compatible. 
+
+All formats are based on JSON. 
+
+### Root node:
+
+```javascript
+{ 
+  "root": {
+    "value": 37618,
+    "hash": "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug="
+  }
+}
+```
+
+### Partial trees:
+
+Partial trees are represented as a `node` object graph. They have the
+following format:
+
+```javascript
+{ 
+  "partial_tree": <node>
+}
+
+```
+
+Nodes have the following format:
+
+```javascript
+{
+  "parent": <node>,
+  "left": <node>,
+  "right": <node>,
+  "data": <node_data>
+}
+```
+
+`<node_data>` is an object which must contain the following keys:
+
+- `value` <number>
+- `hash` <string>
+- `user` <string> (optional) Only the node belonging to the user this partial tree
+  was generated for should have this key set.
+- `nonce` <number> (optional) Only the node belonging to the user this partial tree
+  was generated for should have this key set.
+
 ## Some sample outputs
 
 ```
