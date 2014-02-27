@@ -2,7 +2,9 @@
 
 var program = require('commander'),
   util = require('util'),
-  fs = require('fs'),
+  async = require('async'),
+  path = require('path'),
+  fs = require('fs-extra'),
   Tree = require('./lib/tree'),
   bsolp = require('./lib/bsolp');
 
@@ -17,11 +19,17 @@ function format (node) {
   }
 }
 
+function log (str) {
+  if (!program.verbose) return;
+  console.error(str);
+}
+
 program
   .version('0.0.1')
   .usage('<action>')
   .option('-f, --file <file>', 'Which file to use.')
-  .option('-h, --human', 'Print in human readable format instead of serializing.');
+  .option('-h, --human', 'Print in human readable format instead of serializing.')
+  .option('-v, --verbose', 'Output debugging information.');
 
 program
   .command('completetree')
@@ -80,6 +88,7 @@ program
 program
   .command('verify')
   .description('Verify a partial proof tree. Must specify root hash and value. Must specify the partial proof tree file.')
+  .option('--root <root_file>', 'File of the root')
   .option('--hash <hash>', 'Hash of root node')
   .option('--value <value>', 'Value of root node', parseFloat)
   .action(function (action) {
@@ -88,7 +97,15 @@ program
     var tree = Tree.deserialize(fs.readFileSync(program.file));
 
     var root = tree.root();
-    var root_data = { value: action.value, hash: action.hash };
+
+    var root_data = {};
+    if (action.root) {
+      root_data = JSON.parse(fs.readFileSync(action.root)).root;
+    }
+    else {
+      root_data = { value: action.value, hash: action.hash };
+    }
+
     var result = bsolp.verifyTree(tree, root_data);
 
     if (result.success) {
@@ -104,6 +121,59 @@ program
       }
       process.exit(-1);
     }
+  });
+
+program
+  .command('generate')
+  .description('Generate root and partial trees for all users in accounts file.')
+  .action(function () {
+    if (!program.file) program.help();
+
+    var limit = 20;
+
+    var accounts = JSON.parse(fs.readFileSync(program.file));
+    var len = accounts.length;
+
+    var complete_tree = bsolp.generateCompleteTree(accounts);
+
+    complete_tree.prettyPrint(format);
+   
+    var pt_path = 'partial_trees';
+
+    // remove partial_trees/ recurisvely if it exists
+    fs.removeSync(pt_path);
+    // create an empty partial_trees/ directory
+    fs.mkdirSync(pt_path);
+
+    async.parallel([
+      function (cb) {
+        fs.writeFile('complete_tree.json', complete_tree.serializeToArray(), cb);
+      },
+      function (cb) {
+        fs.writeFile('root.json', JSON.stringify({ root: complete_tree.root().data }), cb);
+      },
+      function (cb) {
+        // limit is to limit how many files can be written at the same time
+        log(accounts);
+
+        async.eachLimit(accounts, limit, function (account, cb) {
+          var partial_tree = bsolp.extractPartialTree(complete_tree, account.user);
+
+          log('Processing ' + account.user);
+          if (program.verbose) partial_tree.prettyPrint(format);
+
+          fs.writeFile(path.join(pt_path, account.user + '.json'), partial_tree.serialize(), cb);
+        }, cb);
+      }
+    ], function (err) {
+      if (err) {
+        console.error(err);
+        process.exit(-1);
+      }
+      else {
+        console.log('Successfuly generated ' + len + ' partial trees in ' + pt_path + '.');
+      }
+    });
   });
 
 program.parse(process.argv);

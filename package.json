@@ -1,20 +1,22 @@
 {
   "name": "blproof",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Blind liability proof tool",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "commander": "~2.1.0"
+    "commander": "~2.1.0",
+    "async": "~0.2.10",
+    "fs-extra": "~0.8.1"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-      "blproof": "./cli.js"
+    "blproof": "./cli.js"
   },
   "repository": {
     "type": "git",

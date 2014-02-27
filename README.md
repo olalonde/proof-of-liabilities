@@ -17,10 +17,30 @@ Beer fund: 1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx
 ## Install
 
 ```
-npm install blproof
+npm install -g blproof
 ```
 
 ## CLI Usage
+
+Simple usage:
+
+```
+# Generate a partial tree for all users in accounts.json.
+# Partial trees will be saved to partial_trees/ directory.
+# complete_tree.json and root.json will be saved to current directory.
+
+$ blproof generate -f accounts.json
+
+# Verify a partial tree 
+
+$ blproof verify --root root.json -f partial_trees/satoshi.json
+
+# or (where hash is the root hash and value is the root value)
+
+$ blproof verify --hash "SLpDal8kYJNdLwczp6wrU68FOFrpoHT3w5nd15HOpwU=" --value 37618 -f mark.json
+```
+
+Advanced usage: 
 
 ```
 # Create complete proof tree from an accounts file (see
