@@ -25,7 +25,7 @@ function log (str) {
 }
 
 program
-  .version('0.0.1')
+  .version(JSON.parse(fs.readFileSync(__dirname + '/package.json', 'utf8')).version)
   .usage('<action>')
   .option('-f, --file <file>', 'Which file to use.')
   .option('-h, --human', 'Print in human readable format instead of serializing.')

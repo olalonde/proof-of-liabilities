@@ -1,6 +1,6 @@
 {
   "name": "blproof",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Blind liability proof tool",
   "main": "index.js",
   "directories": {
