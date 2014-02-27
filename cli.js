@@ -29,13 +29,13 @@ program
     if (!program.file) program.help();
 
     var accounts = JSON.parse(fs.readFileSync(program.file));
-    var private_tree = bsolp.generatePrivateTree(accounts);
+    var complete_tree = bsolp.generateCompleteTree(accounts);
 
     if (program.human) {
-      private_tree.prettyPrint(format);
+      complete_tree.prettyPrint(format);
     }
     else {
-      console.log(private_tree.serialize());
+      console.log(complete_tree.serialize());
     }
   });
 
@@ -46,14 +46,14 @@ program
     if (!program.file) program.help();
     if (!user) program.help();
 
-    var private_tree = Tree.deserialize(fs.readFileSync(program.file));
-    var public_tree = bsolp.extractPublicTree(private_tree, user);
+    var complete_tree = Tree.deserialize(fs.readFileSync(program.file));
+    var partial_tree = bsolp.extractPartialTree(complete_tree, user);
 
     if (program.human) {
-      public_tree.prettyPrint(format);
+      partial_tree.prettyPrint(format);
     }
     else {
-      console.log(public_tree.serialize());
+      console.log(partial_tree.serialize());
     }
   });
 
@@ -63,8 +63,8 @@ program
   .action(function () {
     if (!program.file) program.help();
 
-    var private_tree = Tree.deserialize(fs.readFileSync(program.file));
-    var root = private_tree.root();
+    var complete_tree = Tree.deserialize(fs.readFileSync(program.file));
+    var root = complete_tree.root();
 
     if (program.human) {
       console.log('Root hash: ' + root.data.hash);
