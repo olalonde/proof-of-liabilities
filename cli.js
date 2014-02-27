@@ -7,7 +7,13 @@ var program = require('commander'),
 
 function format (node) {
   var data = node.data;
-  return data.value + ', ' + data.hash;
+  // leaf nodes
+  if (data.nonce) {
+    return data.value + ', ' + data.user + ', ' + data.nonce + ', ' + data.hash;
+  }
+  else {
+    return data.value + ', ' + data.hash;
+  }
 }
 
 program
@@ -34,14 +40,14 @@ program
   });
 
 program
-  .command('publictree <hash>')
-  .description('Extracts public tree for a given hash. Must specify private tree file.')
-  .action(function (hash) {
+  .command('publictree <user>')
+  .description('Extracts public tree for a given user. Must specify private tree file.')
+  .action(function (user) {
     if (!program.file) program.help();
-    if (!hash) program.help();
+    if (!user) program.help();
 
     var private_tree = Tree.deserialize(fs.readFileSync(program.file));
-    var public_tree = bsolp.extractPublicTree(private_tree, hash);
+    var public_tree = bsolp.extractPublicTree(private_tree, user);
 
     if (program.human) {
       public_tree.prettyPrint(format);
