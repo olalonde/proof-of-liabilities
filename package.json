@@ -1,0 +1,37 @@
+{
+  "name": "blproof",
+  "version": "0.0.1",
+  "description": "Blind liability proof tool",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "commander": "~2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+      "blproof": "./cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/olalonde/blind-solvency-proof.git"
+  },
+  "keywords": [
+    "bitcoin",
+    "liability",
+    "proof",
+    "cryptography",
+    "solvency"
+  ],
+  "author": "Olivier Lalonde <olalonde@gmail.com>",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "6d0bc018bb84d03be8e5524f47011a1769d8bfde",
+  "bugs": {
+    "url": "https://github.com/olalonde/blind-solvency-proof/issues"
+  }
+}
