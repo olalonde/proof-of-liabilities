@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 var program = require('commander'),
+  util = require('util'),
   fs = require('fs'),
   Tree = require('./lib/tree'),
   bsolp = require('./lib/bsolp');
@@ -48,12 +49,13 @@ program
 
     var complete_tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
     var partial_tree = bsolp.extractPartialTree(complete_tree, user);
+    //console.log(util.inspect(partial_tree, { depth: null }));
 
     if (program.human) {
       partial_tree.prettyPrint(format);
     }
     else {
-      console.log(partial_tree.serializeToArray());
+      console.log(partial_tree.serialize());
     }
   });
 
@@ -83,7 +85,7 @@ program
   .action(function (action) {
     if (!program.file) program.help();
 
-    var tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
+    var tree = Tree.deserialize(fs.readFileSync(program.file));
 
     var root = tree.root();
     var root_data = { value: action.value, hash: action.hash };

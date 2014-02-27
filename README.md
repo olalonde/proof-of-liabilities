@@ -125,6 +125,8 @@ All formats are based on JSON.
 }
 ```
 
+Hash is the sha256 hash in base64 encoding. Value is a number (float or integer).
+
 ### Partial trees:
 
 Partial trees are represented as a `node` object graph. They have the
@@ -141,7 +143,6 @@ Nodes have the following format:
 
 ```javascript
 {
-  "parent": <node>,
   "left": <node>,
   "right": <node>,
   "data": <node_data>
@@ -151,7 +152,7 @@ Nodes have the following format:
 `<node_data>` is an object which must contain the following keys:
 
 - `value` number
-- `hash` string
+- `hash` string SHA256 hash in base64 encoding
 - `user` string (optional) Only the node belonging to the user this partial tree
   was generated for should have this key set.
 - `nonce` number (optional) Only the node belonging to the user this partial tree
