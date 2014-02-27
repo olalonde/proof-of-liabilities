@@ -149,17 +149,7 @@ Hash is the sha256 hash in base64 encoding. Value is a number (float or integer)
 
 ### Partial trees:
 
-Partial trees are represented as a `node` object graph. They have the
-following format:
-
-```javascript
-{ 
-  "partial_tree": <node>
-}
-
-```
-
-Nodes have the following format:
+Partial trees are represented as a `node` object graph. Nodes have the following format:
 
 ```javascript
 {
@@ -177,6 +167,25 @@ Nodes have the following format:
   was generated for should have this key set.
 - `nonce` number (optional) Only the node belonging to the user this partial tree
   was generated for should have this key set.
+
+## Publishing format (draft)
+
+The following is a recommended way of publishing roots and partial
+trees. Hopefuly it can become standard.
+
+Add the following meta tags to your site:
+
+```html
+<head>
+  <meta name="blproof-root" data="/root.json">
+  <meta name="blproof-partialtree" data="/account/partialtree.json">
+</head>
+```
+
+The partial tree file should be unique to each user and users should not
+be able to download other users' partial trees.
+
+The root file should be publicly accessible.
 
 ## Some sample outputs
 
