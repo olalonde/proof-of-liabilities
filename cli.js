@@ -35,7 +35,7 @@ program
       complete_tree.prettyPrint(format);
     }
     else {
-      console.log(complete_tree.serialize());
+      console.log(complete_tree.serializeToArray());
     }
   });
 
@@ -46,14 +46,14 @@ program
     if (!program.file) program.help();
     if (!user) program.help();
 
-    var complete_tree = Tree.deserialize(fs.readFileSync(program.file));
+    var complete_tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
     var partial_tree = bsolp.extractPartialTree(complete_tree, user);
 
     if (program.human) {
       partial_tree.prettyPrint(format);
     }
     else {
-      console.log(partial_tree.serialize());
+      console.log(partial_tree.serializeToArray());
     }
   });
 
@@ -63,7 +63,7 @@ program
   .action(function () {
     if (!program.file) program.help();
 
-    var complete_tree = Tree.deserialize(fs.readFileSync(program.file));
+    var complete_tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
     var root = complete_tree.root();
 
     if (program.human) {
@@ -71,7 +71,7 @@ program
       console.log('Root value: ' + root.data.value);
     }
     else {
-      console.log(JSON.stringify(root.data));
+      console.log(JSON.stringify({ root: root.data }));
     }
   });
 
@@ -83,12 +83,10 @@ program
   .action(function (action) {
     if (!program.file) program.help();
 
-    var tree = Tree.deserialize(fs.readFileSync(program.file));
+    var tree = Tree.deserializeFromArray(fs.readFileSync(program.file));
 
     var root = tree.root();
-
     var root_data = { value: action.value, hash: action.hash };
-
     var result = bsolp.verifyTree(tree, root_data);
 
     if (result.success) {
