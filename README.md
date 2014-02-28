@@ -1,21 +1,12 @@
 # blproof - Blind liability proof
 
-My attempt at implementing gmaxwell's
-["prove-how-(non)-fractional-your-Bitcoin-reserves-are
-scheme"](https://iwilcox.me.uk/v/nofrac). 
+Intended for use as part of the
+[olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof)
+scheme.
 
 This project only implements
 the "liability" part of the solvency proof (how many bitcoins the
 operator **SHOULD** have - thier liabilities). 
-
-The proof that the operator **DOES** have the assets to cover all its liabilities 
-can be done using Bitcoin's signmessage feature. The complete scheme
-will be described in details eventually.
-
-Chrome extension for automated proof verification by end users:
-https://github.com/olalonde/blproof-extension/ 
-
-![blind liability proof extension screenshot](http://i.minus.com/jCWMC93dAOkPh.png)
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
@@ -182,24 +173,9 @@ Partial trees are represented as a `node` object graph. Nodes have the following
 - `nonce` number (optional) Only the node belonging to the user this partial tree
   was generated for should have this key set.
 
-## Publishing format (draft)
+## Publishing format 
 
-The following is a recommended way of publishing roots and partial
-trees. Hopefuly it can become standard.
-
-Add the following meta tags to your site:
-
-```html
-<head>
-  <meta name="blproof-root" data="/root.json">
-  <meta name="blproof-partialtree" data="/account/partialtree.json">
-</head>
-```
-
-The partial tree file should be unique to each user and users should not
-be able to download other users' partial trees.
-
-The root file should be publicly accessible.
+See [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof#assets-proof).
 
 ## Some sample outputs
 
@@ -261,14 +237,8 @@ $ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJ
 Partial tree verified successfuly!
 ```
 
-## Sites that implement blind-liability-proof
-
-Send a pull request if you would like your site listed here.
-
 ## References
 
 - [Reddit announcement](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/)
 - [HN post](https://news.ycombinator.com/item?id=7277865)
 - [Example of how a shared wallet website could use the CLI](http://www.reddit.com/r/Bitcoin/comments/1yzil4/i_implemented_gmaxwells/cfp50ib)
-
-

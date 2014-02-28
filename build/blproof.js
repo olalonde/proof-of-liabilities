@@ -2027,9 +2027,26 @@ function verify_tree (tree, expected_root_data) {
 
 }
 
+function serialize_partial_tree (ptree, id) {
+  var obj = {
+    id: id,
+    partial_tree: ptree.toObjectGraph()
+  };
+  return JSON.stringify(obj);
+}
+
+function deserialize_partial_tree (str) {
+  var tree = new Tree();
+  var graph = JSON.parse(str).partial_tree;
+  tree.fromObjectGraph(graph);
+  return tree;
+}
+
 module.exports.Tree = Tree;
 module.exports.generateCompleteTree = generate_complete_tree;
 module.exports.extractPartialTree = extract_partial_tree;
+module.exports.serializePartialTree = serialize_partial_tree;
+module.exports.deserializePartialTree = deserialize_partial_tree;
 module.exports.verifyTree = verify_tree;
 
 },{"./tree":12,"crypto":5}],12:[function(_dereq_,module,exports){
