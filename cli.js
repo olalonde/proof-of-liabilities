@@ -29,6 +29,7 @@ program
   .usage('<action>')
   .option('-f, --file <file>', 'Which file to use.')
   .option('-h, --human', 'Print in human readable format instead of serializing.')
+  .option('--id <id>', 'Identifier for use in blind solvency proof scheme.')
   .option('-v, --verbose', 'Output debugging information.');
 
 program
@@ -63,7 +64,7 @@ program
       partial_tree.prettyPrint(format);
     }
     else {
-      console.log(partial_tree.serialize());
+      console.log(blproof.serializePartialTree(partial_tree, program.id));
     }
   });
 
@@ -94,7 +95,9 @@ program
   .action(function (action) {
     if (!program.file) program.help();
 
-    var tree = Tree.deserialize(fs.readFileSync(program.file));
+    var serialized = fs.readFileSync(program.file);
+    var id = JSON.parse(serialized).id;
+    var tree = blproof.deserializePartialTree(serialized);
 
     var root = tree.root();
 
@@ -109,9 +112,13 @@ program
     var result = blproof.verifyTree(tree, root_data);
 
     if (result.success) {
-      console.log('Partial tree verified successfuly!');
-      console.log('Your user is ' + result.data.user + 
-                  ' and your balance is ' + result.data.value);
+      console.log('Partial tree verified successfuly!\n');
+      if (id) {
+        console.log('Site ID: ' + id);
+      }
+      console.log('User: ' + result.data.user);
+      console.log('Balance: ' + result.data.value);
+
       // @TODO: show user and value
     }
     else {
@@ -162,7 +169,9 @@ program
           log('Processing ' + account.user);
           if (program.verbose) partial_tree.prettyPrint(format);
 
-          fs.writeFile(path.join(pt_path, account.user + '.json'), partial_tree.serialize(), cb);
+          fs.writeFile(path.join(pt_path, account.user + '.json'), 
+                       blproof.serializePartialTree(partial_tree, program.id), 
+                       cb);
         }, cb);
       }
     ], function (err) {
