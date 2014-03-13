@@ -1879,6 +1879,8 @@ function generate_complete_tree (accounts) {
   // simplifies some functions
   if (accounts.length % 2 === 0) accounts.push({ user: 'dummy', balance: 0 });
 
+  // @TODO Refactor to use generate_internal_nodes function
+
   // Generate initial hash / value for leaf nodes
   accounts.forEach(function (account) {
     account.user = account.user;
@@ -1929,10 +1931,21 @@ function extract_partial_tree (complete_tree, user) {
   var selected_nodes = path.slice(0);
 
   //console.log(path);
-  // we have the path from the node to the roor
+  // we have the path from the node to the root
   // now we need to make sure the sibling of each node
   // is selected as well
   path.forEach(function (node) {
+    // We don't need to save the node's data
+    // along the root path since it can and should be computed 
+    // when doing the verification.
+    //
+    // @see https://github.com/olalonde/blind-liability-proof/issues/12
+    if (node.data.user === user) {
+      delete node.data.hash; //this should be computed at verification
+    }
+    else {
+      delete node.data;
+    }
     var sibling = partial_tree.sibling(node);
     if (sibling) {
       selected_nodes.push(partial_tree.sibling(node));
@@ -1943,10 +1956,11 @@ function extract_partial_tree (complete_tree, user) {
   // the irrelevant nodes
   partial_tree.slice(selected_nodes);
 
-  // Make sure we hide all other node's private data
+  // Make sure we hide all other leaf node's private data
   partial_tree.traverse(function (n) {
     // every node except user's node
     if (n === node) return;
+    if (!n.data) return;
 
     // replace node by a copy
     // so we don't modify the node in other trees.. ugly hack, I know
@@ -1959,76 +1973,58 @@ function extract_partial_tree (complete_tree, user) {
   return partial_tree;
 }
 
-// @TODO: regenerate user's hash using supplied user / nonce values
-// @TODO: make sure all values are >= 0
-function verify_tree (tree, expected_root_data) {
+function generate_internal_nodes (tree) {
+  tree.reverseLevelTraverse(function (node) {
+    var left = tree.left(node);
+    var right = tree.right(node);
+    // internal nodes
+    if (left && right) {
+      node.data = combine_nodes(left.data, right.data);
+    }
+    // leaf nodes
+    else if (!node.data.hash) {
+      node.data.hash = sha256(node.data.user + '|' + node.data.value + '|' + node.data.nonce);
+    }
+  });
+}
 
-  // @TODO refactor all following verification code to a library function
+function verify_tree (tree, expected_root_data) {
   if (!tree)
     throw new Error('You must provide the partial tree as a first argument.');
 
   if (!expected_root_data)
     throw new Error('You must provide expected root data hash as a second argument.');
 
-  var root = tree.root();
-  var data = {};
-
-  // Make sure root matches
-  if (root.data.value !== expected_root_data.value || root.data.hash !== expected_root_data.hash) {
-    var err = 'Root mismatch!\n';
-    err += 'Expected:\n';
-    err += JSON.stringify(expected_root_data);
-    err += '\n';
-    err += 'Got:';
-    err += '\n';
-    err += JSON.stringify(root.data);
-    return { error: err };
-  }
-
-  var success = true, error;
-  tree.reverseLevelTraverse(function (node) {
-    if (!node) return;
-
-    // If this is the user's node, make sure its hash is valid
-    if (node.data.user) {
-      var expected_hash = sha256(node.data.user + '|' + node.data.value + '|' + node.data.nonce);
-      if (expected_hash !== node.data.hash) {
-        success = false;
-        error = 'User\'s hash does not match hash(user + \'|\' + balance + \'|\' nonce).';
-        error += '\nExpected: ' + expected_hash;
-        error += '\nGot: ' + node.data.hash;
-        return false;
-      }
-      else {
-        data = node.data;
-      }
-    }
-
-    var left = tree.left(node);
-    var right = tree.right(node);
-    if (!left) return;
-
-    var combined_node = combine_nodes (left.data, right.data);
-
-    // There is a negative balance!
-    if (node.data.value < 0) {
-      success = false;
-      error = 'Negative balance detected!';
-      return;
-    }
-
-    // Check that the expected node values match the actual node values 
-    if (node.data.value === combined_node.value && 
-        node.data.hash === combined_node.hash) {
-      // success
-    }
-    else {
-      success = false;
+  var user_node = tree.reverseLevelSearch(function (node) {
+    if (node.data && node.data.user) {
+      return node;
     }
   });
 
-  return { success: success, error: error, data: data };
+  // Verify that there is a user node
+  if (!user_node) {
+    throw new Error('Could not find any user node!');
+  }
 
+  generate_internal_nodes(tree);
+ 
+  // Verify that root is correct
+  var root_data = tree.root().data; 
+  if (!(root_data.value === expected_root_data.value && root_data.hash === expected_root_data.hash)) {
+    throw new Error('Root mismatch. Expected ' + 
+                    JSON.stringify(expected_root_data) + 
+                    ', got ' + JSON.stringify(root_data.hash));
+  }
+
+  // Verify that there are no negative balances
+  tree.reverseLevelTraverse(function (node) {
+    // There is a negative balance!
+    if (node.data.value < 0) {
+      throw new Error('Negative balance detected!');
+    }
+  });
+
+  return user_node.data;
 }
 
 function serialize_partial_tree (ptree, id) {
@@ -2207,6 +2203,7 @@ Tree.prototype.traverse = function (cb, node) {
 // Stop traversing when a callback returns false
 Tree.prototype.reverseLevelTraverse = function (cb) {
   for (var i = this.arr.length - 1; i >= 0; i--) {
+    if (this.arr[i] === undefined) continue;
     if (cb(this.arr[i]) === false) {
       return false;
     }

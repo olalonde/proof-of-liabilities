@@ -10,9 +10,11 @@ var program = require('commander'),
 
 function format (node) {
   var data = node.data;
+  if (!data) return '';
+
   // leaf nodes
-  if (data.nonce) {
-    return data.value + ', ' + data.user + ', ' + data.nonce + ', ' + data.hash;
+  if (data.nonce !== undefined) {
+    return data.value + ', ' + data.user + ', ' + data.nonce;
   }
   else {
     return data.value + ', ' + data.hash;
@@ -108,24 +110,22 @@ program
     else {
       root_data = { value: action.value, hash: action.hash };
     }
+   
+    try {
+      var user_data = blproof.verifyTree(tree, root_data);
 
-    var result = blproof.verifyTree(tree, root_data);
-
-    if (result.success) {
       console.log('Partial tree verified successfuly!\n');
       if (id) {
         console.log('Site ID: ' + id);
       }
-      console.log('User: ' + result.data.user);
-      console.log('Balance: ' + result.data.value);
 
-      // @TODO: show user and value
+      console.log('User: ' + user_data.user);
+      console.log('Balance: ' + user_data.value);
+
     }
-    else {
-      console.log('INVALID partial tree!');
-      if (result.error) {
-        console.log(result.error);
-      }
+    catch (e) {
+      console.error('INVALID partial tree!');
+      console.error(e);
       process.exit(-1);
     }
   });
