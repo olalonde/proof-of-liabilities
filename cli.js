@@ -110,7 +110,7 @@ program
     else {
       root_data = { value: action.value, hash: action.hash };
     }
-   
+
     try {
       var user_data = blproof.verifyTree(tree, root_data);
 

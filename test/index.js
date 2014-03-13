@@ -87,9 +87,9 @@ describe('Generating complete tree', function () {
 
   describe('Extracting partial trees from data/complete_tree.json', function () {
     var complete_tree = fs.readFileSync(__dirname + '/data/complete_tree.json', 'utf8');
-    
+    complete_tree = Tree.deserializeFromArray(complete_tree);
+
     it('complete tree should deserialize', function () {
-      complete_tree = Tree.deserializeFromArray(complete_tree);
       should.ok(complete_tree instanceof Tree);
     });
 
@@ -99,10 +99,81 @@ describe('Generating complete tree', function () {
 
     accounts.forEach(function (account) {
       describe('extracting partial tree for ' + account.user, function () {
-        var partial_tree;
+        var partial_tree, user_node;
         it('should return a tree', function () {
           partial_tree = blproof.extractPartialTree(complete_tree, account.user);
           should.ok(partial_tree instanceof Tree);
+        });
+
+        it('its root node should not contain data', function () {
+          should.equal(partial_tree.root().data, undefined);
+        });
+        it('its interior nodes should have no data', function () {
+          partial_tree.traverse(function (node) {
+            var left = partial_tree.left(node);
+            if (left) {
+              should.equal(node.data, undefined);
+            }
+          });
+        });
+        it('there should be only one node with user/nonce data', function () {
+          var nodes = [];
+          partial_tree.traverse(function (node) {
+            if (node.data && node.data.user) {
+              nodes.push(node);
+            }
+          });
+          should.equal(nodes.length, 1);
+          user_node = nodes[0];
+        });
+
+        it('the user node should be a leaf node', function () {
+          should.equal(partial_tree.left(user_node), undefined);
+          should.equal(partial_tree.right(user_node), undefined);
+        });
+
+        it('the user node should have a sibling', function () {
+          var sibling = partial_tree.sibling(user_node);
+          should.ok(sibling);
+          should.notEqual(sibling.data.value, undefined);
+          should.notEqual(sibling.data.hash, undefined);
+        });
+
+        describe('verification', function () {
+          var root_data, user_data;
+
+          it('succeeds', function () {
+            root_data = complete_tree.root().data;
+            user_data = blproof.verifyTree(partial_tree, root_data);
+            should.ok(user_data);
+          });
+
+          it('throws with incorrect root', function () {
+            should.throws(function () {
+              blproof.verifyTree(partial_tree, {});
+            }, /mismatch/);
+          });
+
+          it('returns expected data', function () {
+            should.equal(user_data.user, account.user);
+            should.equal(user_data.value, account.value);
+          });
+        });
+
+        describe('serialization/deserialization', function () {
+          var serialized, deserialized;
+          it('should return a string', function () {
+            serialized = blproof.serializePartialTree(partial_tree);
+            should.equal(typeof serialized, 'string');
+          });
+          it('should deserialized correctly', function () {
+            deserialized = blproof.deserializePartialTree(serialized);
+            should.ok(deserialized instanceof Tree);
+          });
+          it('should verify', function () {
+            root_data = complete_tree.root().data;
+            user_data = blproof.verifyTree(deserialized, root_data);
+          });
         });
       });
     });
