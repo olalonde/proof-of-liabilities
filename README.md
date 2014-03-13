@@ -106,9 +106,9 @@ Leaf nodes represent user accounts. They possess the following values:
 
   - `user`: A unique identifier for the user. It is necessary for a user
     to assess the uniqueness of this value so it is recommended to use their username or email.
-  - `nonce`: A random nonce to prevent its neighboor node from discovering its `user` value
+  - `nonce`: A random number to prevent its neighboor node from discovering its `user` value
   - `value`: The user's balance.
-  - `hash`: A sha256 hash of user concanetated with the nonce.
+  - `hash`: sha256(user + '|' + value + '|' + nonce)
 
 
 ### Root node
