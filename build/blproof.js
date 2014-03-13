@@ -1881,10 +1881,10 @@ function generate_complete_tree (accounts) {
 
   // Generate initial hash / value for leaf nodes
   accounts.forEach(function (account) {
+    account.user = account.user;
     account.value = account.balance;
-    account.user = account.user; //sha256(account.user);
     account.nonce = nonce();
-    account.hash = sha256(account.user + '' + account.nonce); //sha256(account.user);
+    account.hash = sha256(account.user + '|' + account.balance + '|' + account.nonce);
     delete account.balance;
   });
 
@@ -1918,7 +1918,9 @@ function extract_partial_tree (complete_tree, user) {
   var partial_tree = complete_tree.clone();
 
   var node = partial_tree.reverseLevelSearch(function (node) {
-    return (node.data.user === user);
+    if (node.data.user === user) {
+      return node;
+    }
   });
 
   if (!node) throw new Error('Could not find node with user: ' + user);
@@ -1989,11 +1991,13 @@ function verify_tree (tree, expected_root_data) {
 
     // If this is the user's node, make sure its hash is valid
     if (node.data.user) {
-      var expected_hash = sha256(node.data.user + '' + node.data.nonce);
+      var expected_hash = sha256(node.data.user + '|' + node.data.value + '|' + node.data.nonce);
       if (expected_hash !== node.data.hash) {
         success = false;
-        error = 'User\'s hash does not match hash(user + nonce).';
-        return;
+        error = 'User\'s hash does not match hash(user + \'|\' + balance + \'|\' nonce).';
+        error += '\nExpected: ' + expected_hash;
+        error += '\nGot: ' + node.data.hash;
+        return false;
       }
       else {
         data = node.data;
@@ -2200,9 +2204,12 @@ Tree.prototype.traverse = function (cb, node) {
 };
 
 // Traverse nodes level by level, starting from the bottom
+// Stop traversing when a callback returns false
 Tree.prototype.reverseLevelTraverse = function (cb) {
   for (var i = this.arr.length - 1; i >= 0; i--) {
-    cb(this.arr[i]);
+    if (cb(this.arr[i]) === false) {
+      return false;
+    }
   }
 };
 
