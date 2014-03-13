@@ -48,6 +48,11 @@
     </div>
 
     <div class="container">
+      <div class="alert alert-danger" id="flash" style="display:none">
+        <h4>Error</h4>
+        <p></p>
+      </div>
+
       <div class="tab-content">
         <div class="tab-pane active" id="generate">
           <form action="/" class="form-horizontal" method="get">
@@ -56,10 +61,52 @@
               <div class="form-group">
                 <label class="col-lg-2 control-label" for="accounts">Accounts</label>
                 <div class="col-lg-10 controls">
-                  <textarea class="form-control" id="accounts" rows="5" title="Accounts"></textarea>
+                  <textarea class="form-control" id="accounts" rows="9" title="Accounts"></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-lg-10 controls">
+                  <button id="btn_generate" class="btn btn-primary">Generate</button>
+
+                  <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-default active">
+                      <input name="format" type="radio" value="json"> JSON
+                    </label> 
+                    <label class="btn btn-default">
+                      <input name="format" type="radio" value="pretty"> Pretty
+                    </label> 
+                  </div>
+
+                </div>
+              </div>
+              <div id="generate_results" style="display:none">
+
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label" for="accounts">Root</label>
+                  <div class="col-lg-10 controls">
+                    <textarea class="form-control" id="root" rows="5" title="Root"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-2">Partial tree for <select id="select_account"></select></div>
+                  <div class="col-lg-10 controls">
+                    <textarea class="form-control json" id="partial_tree_for" rows="15">
+                    </textarea>
+                    <textarea class="form-control pretty" style="display:none;" id="partial_tree_for_pretty" rows="15">
+                    </textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-lg-2">Complete tree (for debugging)</div>
+                  <div class="col-lg-10 controls">
+                    <textarea class="form-control json" id="complete_tree" rows="20" title="Complete tree"></textarea>
+                    <textarea class="form-control pretty" id="complete_tree_pretty" rows="20" title="Complete tree" style="display:none"></textarea>
+                  </div>
                 </div>
               </div>
             </fieldset>
+
           </form>
         </div>
         <div class="tab-pane" id="verify">
@@ -87,6 +134,8 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="build/blproof.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
 
