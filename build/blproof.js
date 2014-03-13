@@ -1999,6 +1999,8 @@ function verify_tree (tree, expected_root_data) {
   if (!expected_root_data)
     throw new Error('You must provide expected root data hash as a second argument.');
 
+  tree = tree.clone();
+
   var user_node = tree.reverseLevelSearch(function (node) {
     if (node.data && node.data.user) {
       return node;
@@ -2188,7 +2190,7 @@ Tree.prototype.prettyPrintStr = function (cb, node, spacing) {
 // shallow copy
 Tree.prototype.clone = function () {
   var clone = new Tree();
-  clone.arr = this.arr.slice(0);
+  clone.arr = JSON.parse(JSON.stringify(this.arr));
   return clone;
 };
 
@@ -2213,7 +2215,7 @@ Tree.prototype.traverse = function (cb, node) {
 // Stop traversing when a callback returns false
 Tree.prototype.reverseLevelTraverse = function (cb) {
   for (var i = this.arr.length - 1; i >= 0; i--) {
-    if (this.arr[i] === undefined) continue;
+    if (!this.arr[i]) continue;
     if (cb(this.arr[i]) === false) {
       return false;
     }
@@ -2293,7 +2295,9 @@ Tree.prototype.toObjectGraph = function (node) {
   if (!node) node = this.root();
   var n = {};
 
-  n.data = node.data;
+  if (node.data) {
+    n.data = node.data;
+  }
 
   var left = this.left(node);
   var right = this.right(node);

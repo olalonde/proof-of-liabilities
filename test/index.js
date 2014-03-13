@@ -108,6 +108,7 @@ describe('Generating complete tree', function () {
         it('its root node should not contain data', function () {
           should.equal(partial_tree.root().data, undefined);
         });
+
         it('its interior nodes should have no data', function () {
           partial_tree.traverse(function (node) {
             var left = partial_tree.left(node);
@@ -116,6 +117,7 @@ describe('Generating complete tree', function () {
             }
           });
         });
+
         it('there should be only one node with user/nonce data', function () {
           var nodes = [];
           partial_tree.traverse(function (node) {
@@ -148,6 +150,10 @@ describe('Generating complete tree', function () {
             should.ok(user_data);
           });
 
+          it('should not mutate partial tree', function () {
+            should.equal(partial_tree.root().data, undefined);
+          });
+
           it('throws with incorrect root', function () {
             should.throws(function () {
               blproof.verifyTree(partial_tree, {});
@@ -160,16 +166,32 @@ describe('Generating complete tree', function () {
           });
         });
 
-        describe('serialization/deserialization', function () {
-          var serialized, deserialized;
+        describe('serialization', function () {
+          var serialized, deserialized, obj;
+
           it('should return a string', function () {
             serialized = blproof.serializePartialTree(partial_tree);
             should.equal(typeof serialized, 'string');
           });
+
+          it('should parse as valid JSON', function () {
+            obj = JSON.parse(serialized);
+          });
+
+          it('should have a valid structure', function () {
+            var root = obj.partial_tree;
+            should.equal(typeof obj, 'object');
+            should.equal(typeof root, 'object');
+            should.equal(typeof root.right, 'object');
+            should.equal(typeof root.left, 'object');
+            should.equal(typeof root.data, 'undefined');
+          });
+
           it('should deserialized correctly', function () {
             deserialized = blproof.deserializePartialTree(serialized);
             should.ok(deserialized instanceof Tree);
           });
+
           it('should verify', function () {
             root_data = complete_tree.root().data;
             user_data = blproof.verifyTree(deserialized, root_data);
