@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>blproof</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/lumen/bootstrap.min.css">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <a href="https://github.com/olalonde/blind-liability-proof">
+      <img style="position: absolute; top: 0; right: 0; border: 0;z-index:2000" 
+      src="https://github-camo.global.ssl.fastly.net/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">blproof</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a data-toggle="tab" href="#generate">Generate</a></li>
+            <li><a data-toggle="tab" href="#verify">Verify</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="tab-content">
+        <div class="tab-pane active" id="generate">
+          <form action="/" class="form-horizontal" method="get">
+            <fieldset>
+              <legend>Generate</legend>
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="accounts">Accounts</label>
+                <div class="col-lg-10 controls">
+                  <textarea class="form-control" id="accounts" rows="5" title="Accounts"></textarea>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="tab-pane" id="verify">
+          <form action="/" class="form-horizontal" method="get">
+            <fieldset>
+              <legend>Verify</legend>
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="partial_tree">Partial tree</label>
+                <div class="col-lg-10 controls">
+                  <textarea class="form-control" id="partial_tree" rows="5" title="Accounts">
+                   todo... 
+                  </textarea>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
+
