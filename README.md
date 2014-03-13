@@ -1,6 +1,6 @@
 # blproof - Blind liability proof
 
-[![Build Status](https://travis-ci.org/olalonde/blproof.png)](https://travis-ci.org/olalonde/blproof)
+[![Build Status](https://travis-ci.org/olalonde/blind-liability-proof.png)](https://travis-ci.org/olalonde/blind-liability-proof)
 
 Intended for use as part of the
 [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof)
