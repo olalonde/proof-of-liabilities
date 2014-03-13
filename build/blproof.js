@@ -1935,17 +1935,6 @@ function extract_partial_tree (complete_tree, user) {
   // now we need to make sure the sibling of each node
   // is selected as well
   path.forEach(function (node) {
-    // We don't need to save the node's data
-    // along the root path since it can and should be computed 
-    // when doing the verification.
-    //
-    // @see https://github.com/olalonde/blind-liability-proof/issues/12
-    if (node.data.user === user) {
-      delete node.data.hash; //this should be computed at verification
-    }
-    else {
-      delete node.data;
-    }
     var sibling = partial_tree.sibling(node);
     if (sibling) {
       selected_nodes.push(partial_tree.sibling(node));
@@ -1956,18 +1945,33 @@ function extract_partial_tree (complete_tree, user) {
   // the irrelevant nodes
   partial_tree.slice(selected_nodes);
 
-  // Make sure we hide all other leaf node's private data
+  // Make sure we remove all unnecessary data
+  // @see https://github.com/olalonde/blind-liability-proof/issues/12
   partial_tree.traverse(function (n) {
     // every node except user's node
-    if (n === node) return;
-    if (!n.data) return;
+    var minimal_data;
+    // user's node
+    if (n === node) {
+      minimal_data = {
+        user: n.data.user,
+        value: n.data.value,
+        nonce: n.data.nonce
+      }; 
+    }
+    // interior node
+    else if (partial_tree.left(n)) {
+      minimal_data = null;
+    }
+    else {
+      minimal_data = {
+        value: n.data.value,
+        hash: n.data.hash
+      };
+    }
 
     // replace node by a copy
     // so we don't modify the node in other trees.. ugly hack, I know
-    partial_tree.insert({
-      value: n.data.value,
-      hash: n.data.hash
-    }, n.index);
+    partial_tree.insert(minimal_data, n.index);
   });
 
   return partial_tree;

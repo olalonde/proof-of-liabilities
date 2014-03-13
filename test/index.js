@@ -1,24 +1,25 @@
 var should = require('should'),
   fs = require('fs'),
   blproof = require('../'),
+  Tree = blproof.Tree,
   crypto = require('crypto');
+
+var accounts = require('./data/accounts.json');
 
 function sha256 (data) {
   return crypto.createHash('sha256').update(data).digest('base64');
 }
 
-var accounts = require('./data/accounts.json');
-
 // Regression tests
 //
 // @TODO: unit tests, cli tests, etc.
 
-describe('Acceptance tests', function () {
+describe('Generating complete tree', function () {
   describe ('building a complete tree from data/accounts.json file', function () {
     var complete_tree = blproof.generateCompleteTree(accounts);
 
     it('returns an instance of Tree', function () {
-      should.ok(complete_tree instanceof blproof.Tree);
+      should.ok(complete_tree instanceof Tree);
     });
 
     it('should have 33 nodes', function () {
@@ -82,5 +83,31 @@ describe('Acceptance tests', function () {
         should.equal(mark_node.data.hash, expected_hash);
       });
     });
+  });
+
+  describe('Extracting partial trees from data/complete_tree.json', function () {
+    var complete_tree = fs.readFileSync(__dirname + '/data/complete_tree.json', 'utf8');
+    
+    it('complete tree should deserialize', function () {
+      complete_tree = Tree.deserializeFromArray(complete_tree);
+      should.ok(complete_tree instanceof Tree);
+    });
+
+    it('should have 33 nodes', function () {
+      should.equal(complete_tree.nodeCount(), 33);
+    });
+
+    accounts.forEach(function (account) {
+      describe('extracting partial tree for ' + account.user, function () {
+        var partial_tree;
+        it('should return a tree', function () {
+          partial_tree = blproof.extractPartialTree(complete_tree, account.user);
+          should.ok(partial_tree instanceof Tree);
+        });
+      });
+    });
+    //var partial_tree = blproof.extractPartialTree(complete_tree, user);
+    //console.log(blproof.serializePartialTree(partial_tree, program.id));
+
   });
 });
