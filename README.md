@@ -186,62 +186,71 @@ See [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-p
 
 ## Some sample outputs
 
-```
-$ ./cli.js completetree -f test/accounts.json --human
-37618, ARoRyENGrJyGieLK79OuQWuSE/1znzOLyWAOYmAECOw=
- |_ 24614, PgWlVmieGIUq+g3l0H/+er8BXaA0mNjc8jcxc8uTIZg=
- | |_ 21072, WpPDcPcLHyRqzKnvYXAvipVFPplDzgKtZqqRJz3BO94=
- | | |_ 4167, nvTw6l/trAzY07BJW7XLFZ8w9EGtK65UEO95c5b9UPA=
- | | | |_ 122, LD2m4AZBVNuTBazJfYf31hIvIB5WA+oZ0jeqlJnzMe4=
- | | | | |_ 39, einstein, 0.27035144134424627, NuW19GTHeDh8kem5E/DfFdDHWVzELqVak6IuuIGR+Ck=
- | | | | |_ 83, picasso, 0.19446203880943358, EI3jlqZjR74zphiajQHDsmAXb8/qEgofHyHysiS5sAc=
- | | | |_ 4045, olalonde, 0.323900283081457, h3N10zqNemNHMJ31aqLUNCUQ7rxQFRkRzz1Mayyz2cI=
- | | |_ 16905, SvJCozx3KLid8gyChfCQSNJe5W6Kf6AZy1sTAuQ1LAU=
- | |   |_ 6905, gmaxwell, 0.7565273905638605, 5Crv8D6gIPVcwaRuEL1CPj/6KvvQkuMcPkPO6JnpdZg=
- | |   |_ 10000, satoshi, 0.7995808166451752, F8dXs5Cf/IlFSxpuAU2idJrVLt9B0H/o4dgO8cMI5mA=
- | |_ 3542, CZcqeTmpSRNVj6OoGzesDsfJThLLuGZU5oI+lBRuimw=
- |   |_ 3327, M1BxypagXgZDXEIDIjOpNOrG1yQPnYGR2AnghBSXJf8=
- |   | |_ 300, luke-jr, 0.552029364509508, afE1DC5LV0y6WfZuiC5H5+yq3mKSBlJJuQr/Yj4mtes=
- |   | |_ 3027, sipa, 0.8273184080608189, v3ul5BLGkLU0sOaMAMNXHUP6q8wYvXzB+yUrIujHe7I=
- |   |_ 215, 68oIqC3/xs90UDrIY2R8UaJ/sbZYqevMGal6845UDJs=
- |     |_ 200, codeshark, 0.9785103949252516, K4OBBdecagopyk+MVyeH15R19Zj3GTB0llG5Dm1bvOg=
- |     |_ 15, gribble, 0.06026308285072446, qGifo7VltIcTX1aFmdl5KEXB/3HI6OgYgU8gF0oUgoQ=
- |_ 13004, b6nOnnYmEOCR6LmdfG2KUeXjudfla97B6CaMUUKNN60=
-   |_ 9901, pgpCn3hILMxj01Dba3zJ9TsQwepRcEBdJHoAV4ywx64=
-   | |_ 12, +QaapnLGXcJ3Hjya8Xo1Ju89fn5FgB2ViPvjcrUO9EM=
-   | | |_ 0, alice, 0.16321996343322098, uNKPPjtmNpeX19AJg0DTt6F9l1Hta2H7miQxqgtHtgs=
-   | | |_ 12, bob, 0.45615525753237307, UUhgdge7KiWplNdCNMG1lW05aQgnGdY5kuDcceCyujA=
-   | |_ 9889, 5M/VQ9wGbg4xFmLZMRcNr6qpkt9P7fRuCHQEv3ovha0=
-   |   |_ 9427, charlie, 0.5375598601531237, 91R6nQU+uOE63+PiAmj3SQXL6CPaF1SFDgbYSJImBtk=
-   |   |_ 462, mark, 0.6156334422994405, KV1Rx2kmM3PZkp6vVJ0Dc8Rgj/6bOuxNmp941hIHmqc=
-   |_ 3103, jrhEVauiHrtRFsfRLPfL/TdoNalXD52eOaPONAJlO0g=
-     |_ 3032, GIehVY5ZEwefbBBvP2LXN551RbDFicdmHLlu2LWPa9E=
-     | |_ 12, anax, 0.7285208490211517, MD6AkV09BiyJPNPgNbdqYmUJgj0l1vUcIwolKIBA4Kg=
-     | |_ 3020, gavin, 0.34977371199056506, y2lMSrLc8M5LPVV062iNib0P5we9gXtV8fxWYGZx9vU=
-     |_ 71, Oy1k8UR/dVPhODv8cFxm6/4oZReoMCK30DgmCcLxAws=
-       |_ 68, stacy, 0.24734967038966715, 4hv2lQy2lCN6Z3y70empHCWIBmzJ7lebeFjIub0mgMg=
-       |_ 3, justin, 0.786616450175643, jB+xQC8s8IGL9cB+R9I2zEGGOAMV723LcM8/SnYC5ps=
+In `test/`. Note that the hash values change when executing the same
+command twice as the nonce are generated randomly.
 
-$ ./cli.js completetree -f test/accounts.json > complete.out.json
+```bash
 
-$ ./cli.js partialtree mark -f complete.out.json --human
-37618, 2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=
- |_ 24614, vZRQ3uGn4Kr4490RcjN6a7ddZjDtiP09MFXGPVtHdTE=
- |_ 13004, pTk3eTymd+Eee6hIsw9pImID+QlkRa3ro8QCaaUMn+E=
-   |_ 9901, WNH+sUQcyV9VECsnFSrVUmpdJ7+d0XAVpClonR9osZI=
-   | |_ 12, eP0+1iEkq0uJJQLD4bZbn8duggxNUdoSHsPbjPYL5Ng=
-   | |_ 9889, wY6rZAEZvn2Ts9UxcEB22dbnxD01LHKCX9em45tboq4=
-   |   |_ 9427, charlie, 0.6493051161523908, 4P3d/9OMhV2otvzmc0wxNt2FXYwMaA2ANt8Grm5iLuI=
-   |   |_ 462, mark, 0.9704850744456053, g3F8hhQ5YGIzsBz5YeoQpOeZHXEIDneMdHTd9/TiyBM=
-   |_ 3103, /I8csAnivlstZvjS+1C5ecbEt3rm4SbLOFdm5fwewjE=
+$ ../cli.js completetree -f accounts.json --human
 
-$ ./cli.js partialtree mark -f complete.out.json > partial.out.json
+37618, dLHSG4ZyIxZ/f4R7XtJ+pVIqtsX9AMY5ivPmaUGu+Sg=
+ |_ 24614, hkqF8w5tv9lifzRrJW/hKn7Q3ANrr3t751gFARu6IeY=
+ | |_ 21072, ScXstoH3/way/cWYISRyLsXd2aJTqzmfuj101VqsivY=
+ | | |_ 4167, dWhYurpOonzMw+7uAJDAhEkKHXeKQdS3dCd5mH8U9PU=
+ | | | |_ 122, 9KYbpT+YWEeizUQmNvY5LX2x6o+svzi4xZ3uI43xgVE=
+ | | | | |_ 39, einstein, 0.09985585859976709
+ | | | | |_ 83, picasso, 0.7243645829148591
+ | | | |_ 4045, olalonde, 0.9388562678359449
+ | | |_ 16905, 6qcgujpnznmgbpwroma3vQRVc34LyLKJDu9JHH4clSQ=
+ | |   |_ 6905, gmaxwell, 0.7123587417881936
+ | |   |_ 10000, satoshi, 0.46833383152261376
+ | |_ 3542, xeVsix+vju6GsUf2iOVzp4MgH6wUIvqkkO63UcW7RDM=
+ |   |_ 3327, cVcRdhHtDAjYPGKJgFeeQWiTTpURZ2hJ30iEM6xtvgA=
+ |   | |_ 300, luke-jr, 0.47092385264113545
+ |   | |_ 3027, sipa, 0.10589101002551615
+ |   |_ 215, 0TCVjiuCgxilZAgXbeAoJT3/zoaYcvbZiy7MAL8ukrw=
+ |     |_ 200, codeshark, 0.12324331048876047
+ |     |_ 15, gribble, 0.9504100847989321
+ |_ 13004, TFyQdFpnE2G9PEAf03HQ73FyDyRTy9kRL70kePdFo7k=
+   |_ 9901, KxQ4gOBo6bHZA74FoIj7t5078+UQq+V71vC+MI+T4ck=
+   | |_ 12, mno4J/cZ5bwol+VuRNWFUTR6uYWu/bND18/TFSISuMU=
+   | | |_ 0, alice, 0.13097181799821556
+   | | |_ 12, bob, 0.99190160818398
+   | |_ 9889, VBFmIlvgxQ/jnk54CSlfHxrLcynzLbGKxjndiOsULmE=
+   |   |_ 9427, charlie, 0.7431337819434702
+   |   |_ 462, mark, 0.28908941335976124
+   |_ 3103, c1YTJY7XXWVcFnHQz8k13jNTF3TpTswKNgJUTfR3OIg=
+     |_ 3032, sTZW88KQc99WmN9DkgDAvmeqSrShe+tfmb4m8UQDRoI=
+     | |_ 12, anax, 0.7174370898865163
+     | |_ 3020, gavin, 0.18109926907345653
+     |_ 71, LnHLEktE7+FR7Oca2jkUKbSOHEvMJVWlC0oKup12DsQ=
+       |_ 68, stacy, 0.9329951496329159
+       |_ 3, justin, 0.77584387245588
 
-$ ./cli.js root -f complete.out.json
-{"value":37618,"hash":"2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug="}
+$ ../cli.js completetree -f accounts.json > complete.out.json
 
-$ ./cli.js verify --value 37618 --hash "2evVTMS8wbF2p5aq1qFETanO24BsnP/eshJxxPHJcug=" -f partial.out.json
+$ ../cli.js partialtree mark -f complete.out.json --human
+
+ |_ 24614, XjUIfej5Vxd3iu9BXCoJJI7hVAQRrg0gTukaypRzxDU=
+ |_
+   |_
+   | |_ 12, NncluiYssLFglDr21RrRlmOHkn7XpVflFDycoQJdWOM=
+   | |_
+   |   |_ 9427, Tijifd355WjyUdYDg/WUixo07wzNEGmXtx63VJNxff0=
+   |   |_ 462, mark, 0.4003799057099968
+   |_ 3103, Kz0j/ebNpCvHcwRk31STdWjqngIeMKNdBxG39GY2gtU=
+
+$ ../cli.js partialtree mark -f complete.out.json > partial.out.json
+
+$ ../cli.js root -f complete.out.json
+{"root":{"value":37618,"hash":"RXICgKsrMJV4OBP709Adnk/LaLQ7nqpPUljCQdz3pBU="}}
+
+$ ../cli.js verify --value 37618 --hash "RXICgKsrMJV4OBP709Adnk/LaLQ7nqpPUljCQdz3pBU=" -f partial.out.json
 Partial tree verified successfuly!
+
+User: mark
+Balance: 462
+
 ```
 
 ## References
