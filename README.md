@@ -1,12 +1,10 @@
 # blproof - Blind liability proof
 
+[![Build Status](https://travis-ci.org/olalonde/blproof.png)](https://travis-ci.org/olalonde/blproof)
+
 Intended for use as part of the
 [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof)
 scheme.
-
-This project only implements
-the "liability" part of the solvency proof (how many bitcoins the
-operator **SHOULD** have - thier liabilities). 
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 

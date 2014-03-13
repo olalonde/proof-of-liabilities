@@ -2076,6 +2076,10 @@ Tree.fromArray = function (arr) {
   return tree;
 };
 
+Tree.prototype.nodeCount = function () {
+  return this.arr.length;
+};
+
 Tree.prototype.insert = function (element, index) {
   var node;
   if (typeof index === 'number') {
@@ -2193,10 +2197,12 @@ Tree.prototype.traverse = function (cb, node) {
   var left = this.left(node);
   var right = this.right(node);
 
-  if (left) 
+  if (left) {
     this.traverse(cb, left);
-  if (right)
+  }
+  if (right) {
     this.traverse(cb, right);
+  }
 };
 
 // Traverse nodes level by level, starting from the bottom
