@@ -1,0 +1,11 @@
+textarea, textarea.form-control {
+  font-family: Menlo,Monaco,Consolas,"Courier New",monospace;
+  font-size: 90%;
+  width: 100%;
+}
+
+pre {
+  overflow: auto;
+  white-space: pre;
+  word-wrap: normal;
+}
