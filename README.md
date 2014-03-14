@@ -6,15 +6,11 @@ Intended for use as part of the
 [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof)
 scheme.
 
-*NEW*: [blproof (web)](http://olalonde.github.io/blind-liability-proof)
+*NEW*: [web UI](http://olalonde.github.io/blind-liability-proof)
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
 ## Install
-
-[blproof (web)](http://olalonde.github.io/blind-liability-proof)
-
-or
 
 ```
 npm install -g blproof
