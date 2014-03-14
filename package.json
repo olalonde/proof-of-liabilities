@@ -1,6 +1,6 @@
 {
   "name": "blproof",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Blind liability proof tool",
   "main": "index.js",
   "directories": {
@@ -27,6 +27,7 @@
     "type": "git",
     "url": "git://github.com/olalonde/blind-solvency-proof.git"
   },
+  "homepage": "http://olalonde.github.io/blind-liability-proof",
   "keywords": [
     "bitcoin",
     "liability",
