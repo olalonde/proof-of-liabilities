@@ -66,6 +66,20 @@ See `cli.js`.
 
 Browser build: `browserify index.js --standalone blproof > build/blproof.js`.
 
+## Other implementations
+
+Clojure:
+
+https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree.clj
+
+Python:
+
+https://github.com/ConceptPending/proveit
+
+C++:
+
+https://github.com/bifubao/proof_of_reserves
+
 ## Definitions
 
 ### Complete proof tree
@@ -181,75 +195,6 @@ Partial trees are represented as a `node` object graph. Nodes have the following
 ## Publishing format 
 
 See [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof#assets-proof).
-
-## Some sample outputs
-
-In `test/`. Note that the hash values change when executing the same
-command twice as the nonce are generated randomly.
-
-```bash
-
-$ ../cli.js completetree -f accounts.json --human
-
-37618, dLHSG4ZyIxZ/f4R7XtJ+pVIqtsX9AMY5ivPmaUGu+Sg=
- |_ 24614, hkqF8w5tv9lifzRrJW/hKn7Q3ANrr3t751gFARu6IeY=
- | |_ 21072, ScXstoH3/way/cWYISRyLsXd2aJTqzmfuj101VqsivY=
- | | |_ 4167, dWhYurpOonzMw+7uAJDAhEkKHXeKQdS3dCd5mH8U9PU=
- | | | |_ 122, 9KYbpT+YWEeizUQmNvY5LX2x6o+svzi4xZ3uI43xgVE=
- | | | | |_ 39, einstein, 0.09985585859976709
- | | | | |_ 83, picasso, 0.7243645829148591
- | | | |_ 4045, olalonde, 0.9388562678359449
- | | |_ 16905, 6qcgujpnznmgbpwroma3vQRVc34LyLKJDu9JHH4clSQ=
- | |   |_ 6905, gmaxwell, 0.7123587417881936
- | |   |_ 10000, satoshi, 0.46833383152261376
- | |_ 3542, xeVsix+vju6GsUf2iOVzp4MgH6wUIvqkkO63UcW7RDM=
- |   |_ 3327, cVcRdhHtDAjYPGKJgFeeQWiTTpURZ2hJ30iEM6xtvgA=
- |   | |_ 300, luke-jr, 0.47092385264113545
- |   | |_ 3027, sipa, 0.10589101002551615
- |   |_ 215, 0TCVjiuCgxilZAgXbeAoJT3/zoaYcvbZiy7MAL8ukrw=
- |     |_ 200, codeshark, 0.12324331048876047
- |     |_ 15, gribble, 0.9504100847989321
- |_ 13004, TFyQdFpnE2G9PEAf03HQ73FyDyRTy9kRL70kePdFo7k=
-   |_ 9901, KxQ4gOBo6bHZA74FoIj7t5078+UQq+V71vC+MI+T4ck=
-   | |_ 12, mno4J/cZ5bwol+VuRNWFUTR6uYWu/bND18/TFSISuMU=
-   | | |_ 0, alice, 0.13097181799821556
-   | | |_ 12, bob, 0.99190160818398
-   | |_ 9889, VBFmIlvgxQ/jnk54CSlfHxrLcynzLbGKxjndiOsULmE=
-   |   |_ 9427, charlie, 0.7431337819434702
-   |   |_ 462, mark, 0.28908941335976124
-   |_ 3103, c1YTJY7XXWVcFnHQz8k13jNTF3TpTswKNgJUTfR3OIg=
-     |_ 3032, sTZW88KQc99WmN9DkgDAvmeqSrShe+tfmb4m8UQDRoI=
-     | |_ 12, anax, 0.7174370898865163
-     | |_ 3020, gavin, 0.18109926907345653
-     |_ 71, LnHLEktE7+FR7Oca2jkUKbSOHEvMJVWlC0oKup12DsQ=
-       |_ 68, stacy, 0.9329951496329159
-       |_ 3, justin, 0.77584387245588
-
-$ ../cli.js completetree -f accounts.json > complete.out.json
-
-$ ../cli.js partialtree mark -f complete.out.json --human
-
- |_ 24614, XjUIfej5Vxd3iu9BXCoJJI7hVAQRrg0gTukaypRzxDU=
- |_
-   |_
-   | |_ 12, NncluiYssLFglDr21RrRlmOHkn7XpVflFDycoQJdWOM=
-   | |_
-   |   |_ 9427, Tijifd355WjyUdYDg/WUixo07wzNEGmXtx63VJNxff0=
-   |   |_ 462, mark, 0.4003799057099968
-   |_ 3103, Kz0j/ebNpCvHcwRk31STdWjqngIeMKNdBxG39GY2gtU=
-
-$ ../cli.js partialtree mark -f complete.out.json > partial.out.json
-
-$ ../cli.js root -f complete.out.json
-{"root":{"value":37618,"hash":"RXICgKsrMJV4OBP709Adnk/LaLQ7nqpPUljCQdz3pBU="}}
-
-$ ../cli.js verify --value 37618 --hash "RXICgKsrMJV4OBP709Adnk/LaLQ7nqpPUljCQdz3pBU=" -f partial.out.json
-Partial tree verified successfuly!
-
-User: mark
-Balance: 462
-
-```
 
 ## References
 
