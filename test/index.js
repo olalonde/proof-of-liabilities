@@ -10,9 +10,23 @@ function sha256 (data) {
   return crypto.createHash('sha256').update(data).digest('base64');
 }
 
+function verifyTreeForUser(accounts, user){
+    var complete_tree = blproof.generateCompleteTree(accounts);
+    var partialTree = blproof.extractPartialTree(complete_tree, user);
+    console.log("partial_tree:", partialTree.serialize());
+    var response = {"id":"EmptyGox BTC liabilities", "partial_tree": JSON.parse(partialTree.serialize())}
+    var root = complete_tree.root()
+    //var Tree = blproof.Tree;
+    //var ptree = new Tree();
+    //ptree.fromObjectGraph(partialTree);
+    var ptree = blproof.deserializePartialTree(JSON.stringify(response));
+    console.log("PTree: ", ptree);
+    assert(blproof.verifyTree(ptree, { root: root.data }));
+}
 // Regression tests
 //
 // @TODO: unit tests, cli tests, etc.
+
 
 describe('Generating complete tree', function () {
   describe ('building a complete tree from data/accounts.json file', function () {
@@ -204,3 +218,13 @@ describe('Generating complete tree', function () {
 
   });
 });
+
+describe('NonRegression', function () {
+    describe ('add new tests based on new issue', function () {
+      it('RootMismatch', function () {
+          var account = require('./data/accounts_2.json');
+          var user = "alice@nomail.com"
+          verifyTreeForUser(account, user)
+      });
+    })
+})
