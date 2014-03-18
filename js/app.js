@@ -88,16 +88,16 @@ $(function () {
     complete_tree = blproof.generateCompleteTree(accounts);
 
     var root = complete_tree.root();
-    
+
     //@hack
     twice(function () {
-      $('#expected_root').html(serialize(root.data));
+      $('#expected_root').html(blproof.serializeRoot(complete_tree));
     });
 
     $('#complete_tree').html(serialize(complete_tree));
     $('#complete_tree_pretty').html(complete_tree.prettyPrintStr(format));
-    $('#root').html(serialize(root.data));
-    
+    $('#root').html(blproof.serializeRoot(complete_tree));
+
     // Populate select
     var html = '';
     accounts.forEach(function (account) {
@@ -139,7 +139,7 @@ $(function () {
 
     try {
       var partial_tree = blproof.deserializePartialTree($('#partial_tree').val());
-      var expected_root = JSON.parse($('#expected_root').val());
+      var expected_root = blproof.deserializeRoot($('#expected_root').val());
 
       res = blproof.verifyTree(partial_tree, expected_root);
     }
