@@ -1894,7 +1894,8 @@ function generate_complete_tree (accounts) {
   accounts.forEach(function (account) {
     account.user = account.user;
     account.value = account.balance;
-    account.nonce = nonce();
+    // make it possible to specify nonce in account.json for testing implementations
+    account.nonce = '' + (account.nonce || nonce());
     account.hash = sha256(account.user + '|' + account.balance + '|' + account.nonce);
     delete account.balance;
   });
