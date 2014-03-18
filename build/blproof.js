@@ -1853,6 +1853,16 @@ function nonce () {
   return Math.random();
 }
 
+function to_float(integer) {
+  return integer / 100000000;
+}
+function to_int(float) {
+  return float * 100000000;
+}
+function add_floats(x, y) {
+  return to_float(to_int(x) + to_int(y));
+}
+
 // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
 function clone (obj) {
   if (null === obj || "object" != typeof obj) return obj;
@@ -1865,9 +1875,8 @@ function clone (obj) {
 
 function combine_nodes (left_node, right_node) {
   var n = {};
-  n.value = left_node.value + right_node.value;
-  n.hash = sha256((left_node.value + right_node.value) +
-                  '' + left_node.hash + '' + right_node.hash);
+  n.value = add_floats(left_node.value, right_node.value);
+  n.hash = sha256(n.value + '' + left_node.hash + '' + right_node.hash);
   return n;
 }
 
@@ -1904,7 +1913,6 @@ function generate_complete_tree (accounts) {
   var arr = (new Array(i)).concat(accounts);
 
   var tree = Tree.fromArray(arr);
-  //console.log(tree);
 
   tree.reverseLevelTraverse(function (node) {
     if (!node.data) {
@@ -1930,7 +1938,6 @@ function extract_partial_tree (complete_tree, user) {
   var path = partial_tree.extractPath(node);
   var selected_nodes = path.slice(0);
 
-  //console.log(path);
   // we have the path from the node to the root
   // now we need to make sure the sibling of each node
   // is selected as well
@@ -1956,7 +1963,7 @@ function extract_partial_tree (complete_tree, user) {
         user: n.data.user,
         value: n.data.value,
         nonce: n.data.nonce
-      }; 
+      };
     }
     // interior node
     else if (partial_tree.left(n)) {
@@ -2013,13 +2020,13 @@ function verify_tree (tree, expected_root_data) {
   }
 
   generate_internal_nodes(tree);
- 
+
   // Verify that root is correct
-  var root_data = tree.root().data; 
+  var root_data = tree.root().data;
   if (!(root_data.value === expected_root_data.value && root_data.hash === expected_root_data.hash)) {
-    throw new Error('Root mismatch. Expected ' + 
-                    JSON.stringify(expected_root_data) + 
-                    ', got ' + JSON.stringify(root_data.hash));
+    throw new Error('Root mismatch. Expected ' +
+                    JSON.stringify(expected_root_data) +
+                    ', got ' + JSON.stringify(root_data));
   }
 
   // Verify that there are no negative balances
