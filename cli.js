@@ -157,7 +157,7 @@ program
         fs.writeFile('complete_tree.json', complete_tree.serializeToArray(), cb);
       },
       function (cb) {
-        fs.writeFile('root.json', JSON.stringify({ root: complete_tree.root().data }), cb);
+        fs.writeFile('root.json', blproof.serializeRoot(complete_tree), cb);
       },
       function (cb) {
         // limit is to limit how many files can be written at the same time

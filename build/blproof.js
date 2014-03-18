@@ -2055,11 +2055,25 @@ function deserialize_partial_tree (str) {
   return tree;
 }
 
+function serialize_root (complete_tree, id) {
+  var obj = {
+    id: id,
+    root: complete_tree.root().data
+  };
+  return JSON.stringify(obj);
+}
+
+function deserialize_root (str) {
+  return JSON.parse(str).root;
+}
+
 module.exports.Tree = Tree;
 module.exports.generateCompleteTree = generate_complete_tree;
 module.exports.extractPartialTree = extract_partial_tree;
 module.exports.serializePartialTree = serialize_partial_tree;
 module.exports.deserializePartialTree = deserialize_partial_tree;
+module.exports.serializeRoot = serialize_root;
+module.exports.deserializeRoot = deserialize_root;
 module.exports.verifyTree = verify_tree;
 
 },{"./tree":12,"crypto":5}],12:[function(_dereq_,module,exports){
