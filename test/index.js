@@ -199,8 +199,15 @@ describe('Generating complete tree', function () {
         });
       });
     });
-    //var partial_tree = blproof.extractPartialTree(complete_tree, user);
-    //console.log(blproof.serializePartialTree(partial_tree, program.id));
+  });
 
+  describe('Float errors', function () {
+    it('total balance should be right', function () {
+      // @see https://github.com/olalonde/blind-liability-proof/issues/16
+      var ptree = fs.readFileSync(__dirname + '/data/partial_tree_float.json', 'utf8');
+      ptree = blproof.deserializePartialTree(ptree);
+      var expected_root = {"hash":"yB24bebCDwzAMOowfbcZ6/epoY3/pGGqF2TyAn6td1w=","value":27208.23};
+      var res = blproof.verifyTree(ptree, expected_root);
+    });
   });
 });
