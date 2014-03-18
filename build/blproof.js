@@ -1884,12 +1884,6 @@ function combine_nodes (left_node, right_node) {
 // leak information about number of users. randomize tree structure!?
 // add fake nodes with 0 balance? maybe all right leaf node should be a dummy user?
 function generate_complete_tree (accounts) {
-  // Make sure number of nodes is odd so we don't have a lonely leaf
-  // simplifies some functions
-  if (accounts.length % 2 === 0) accounts.push({ user: 'dummy', balance: 0 });
-
-  // @TODO Refactor to use generate_internal_nodes function
-
   // Generate initial hash / value for leaf nodes
   accounts.forEach(function (account) {
     account.user = account.user;
