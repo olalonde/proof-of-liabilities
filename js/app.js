@@ -24,7 +24,6 @@ function format (obj) {
   data = obj.data;
   if (!data) return '';
 
-  console.log(arguments);
   var res = '';
   var sep = '';
   ['user', 'nonce', 'value', 'hash'].forEach(function (prop) {
@@ -144,16 +143,15 @@ $(function () {
       res = blproof.verifyTree(partial_tree, expected_root);
     }
     catch (err) {
-      html += 'Verification failed!';
-      html += '<br><br>';
+      html += '<h4>Verification failed!</h4>';
       html += err.message;
 
       $('#verification').removeClass('alert-success').addClass('alert-danger').html(html);
+      $('#verify_results').show();
       return;
     }
 
-    html += 'Verification successful!';
-    html += '<br><br>';
+    html += '<h4>Verification successful!</h4>';
     html += 'User: ' + res.user;
     html += '<br>';
     html += 'Balance: ' + res.value;
