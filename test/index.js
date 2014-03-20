@@ -156,7 +156,7 @@ describe('Generating complete tree', function () {
 
           it('throws with incorrect root', function () {
             should.throws(function () {
-              blproof.verifyTree(partial_tree, {});
+              blproof.verifyTree(partial_tree, { value: 1, hash: 'uhhh' });
             }, /mismatch/);
           });
 
@@ -206,9 +206,7 @@ describe('Generating complete tree', function () {
       // @see https://github.com/olalonde/blind-liability-proof/issues/16
       var accounts_float = require('./data/accounts_float.json');
       var complete_tree = blproof.generateCompleteTree(accounts_float);
-
-      complete_tree.prettyPrint();
-      should.equal(complete_tree.root().data.value, 0.0000001);
+      should.strictEqual(complete_tree.root().data.value.toString(), '1e-7');
     });
   });
 });
