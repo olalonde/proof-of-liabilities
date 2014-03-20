@@ -7,7 +7,7 @@ var should = require('should'),
 var accounts = require('./data/accounts.json');
 
 function sha256 (data) {
-  return crypto.createHash('sha256').update(data).digest('base64');
+  return crypto.createHash('sha256').update(data).digest('hex');
 }
 
 // Regression tests
@@ -204,10 +204,11 @@ describe('Generating complete tree', function () {
   describe('Float errors', function () {
     it('total balance should be right', function () {
       // @see https://github.com/olalonde/blind-liability-proof/issues/16
-      var ptree = fs.readFileSync(__dirname + '/data/partial_tree_float.json', 'utf8');
-      ptree = blproof.deserializePartialTree(ptree);
-      var expected_root = {"hash":"yB24bebCDwzAMOowfbcZ6/epoY3/pGGqF2TyAn6td1w=","value":27208.23};
-      var res = blproof.verifyTree(ptree, expected_root);
+      var accounts_float = require('./data/accounts_float.json');
+      var complete_tree = blproof.generateCompleteTree(accounts_float);
+
+      complete_tree.prettyPrint();
+      should.equal(complete_tree.root().data.value, 0.0000001);
     });
   });
 });

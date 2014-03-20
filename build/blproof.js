@@ -1846,11 +1846,18 @@ var Tree = _dereq_('./tree'),
   crypto = _dereq_('crypto');
 
 function sha256 (data) {
-  return crypto.createHash('sha256').update(data).digest('base64');
+  return crypto.createHash('sha256').update(data).digest('hex');
 }
 
 function nonce () {
-  return Math.random();
+  // @TODO: 128 bits of randomness!?
+  // Javascript floating numbers are represented with 64 bit IIRC
+  // The following code will probably make cryptographers want to tear their
+  // eyes out.
+  var randomness = Math.random() + '' + Math.random();
+  var hex = sha256(randomness);
+  // 128 bits can be represented with 32 hex characters
+  return hex.substr(0, 32);
 }
 
 function to_float(integer) {
@@ -1884,10 +1891,16 @@ function combine_nodes (left_node, right_node) {
 // leak information about number of users. randomize tree structure!?
 // add fake nodes with 0 balance? maybe all right leaf node should be a dummy user?
 function generate_complete_tree (accounts) {
+  var mode = 'default';
+
   // Generate initial hash / value for leaf nodes
   accounts.forEach(function (account) {
+    // switch to test mode if the accounts JSON has a nonce set
+    if (account.nonce) mode ='test';
+
     account.user = account.user;
-    account.value = account.balance;
+    account.value = Number(account.balance);
+    console.log(account.balance);
     // make it possible to specify nonce in account.json for testing implementations
     account.nonce = '' + (account.nonce || nonce());
     account.hash = sha256(account.user + '|' + account.balance + '|' + account.nonce);
