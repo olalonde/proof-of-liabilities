@@ -45,11 +45,11 @@ describe('Generating complete tree', function () {
       it('should have a hash', function () {
         should.ok(root.data.hash);
       });
-      it('should have a value', function () {
-        should.ok(root.data.value);
+      it('should have a sum', function () {
+        should.ok(root.data.sum);
       });
-      it('its value should equal 37618', function () {
-        should.equal(root.data.value, 37618);
+      it('its sum should equal 37618', function () {
+        should.equal(root.data.sum, 37618);
       });
     });
 
@@ -64,9 +64,9 @@ describe('Generating complete tree', function () {
         should.ok(mark_node);
       });
 
-      it('should have the correct value/username', function () {
+      it('should have the correct sum/username', function () {
         should.equal(mark_node.data.user, 'mark');
-        should.equal(mark_node.data.value, 462);
+        should.equal(mark_node.data.sum, 462);
       });
 
       it('should have a nonce', function () {
@@ -77,9 +77,9 @@ describe('Generating complete tree', function () {
         should.ok(mark_node.data.hash);
       });
 
-      it('its hash should equal sha256(user + \'|\' + value + \'|\' + nonce)', function () {
+      it('its hash should equal sha256(user + \'|\' + sum + \'|\' + nonce)', function () {
         var data = mark_node.data;
-        var expected_hash = sha256(data.user + '|' + data.value + '|' + data.nonce);
+        var expected_hash = sha256(data.user + '|' + data.sum + '|' + data.nonce);
         should.equal(mark_node.data.hash, expected_hash);
       });
     });
@@ -137,7 +137,7 @@ describe('Generating complete tree', function () {
         it('the user node should have a sibling', function () {
           var sibling = partial_tree.sibling(user_node);
           should.ok(sibling);
-          should.notEqual(sibling.data.value, undefined);
+          should.notEqual(sibling.data.sum, undefined);
           should.notEqual(sibling.data.hash, undefined);
         });
 
@@ -156,13 +156,13 @@ describe('Generating complete tree', function () {
 
           it('throws with incorrect root', function () {
             should.throws(function () {
-              blproof.verifyTree(partial_tree, { value: 1, hash: 'uhhh' });
+              blproof.verifyTree(partial_tree, { sum: 1, hash: 'uhhh' });
             }, /mismatch/);
           });
 
           it('returns expected data', function () {
             should.equal(user_data.user, account.user);
-            should.equal(user_data.value, account.value);
+            should.equal(user_data.sum, account.sum);
           });
         });
 
@@ -206,7 +206,7 @@ describe('Generating complete tree', function () {
       // @see https://github.com/olalonde/blind-liability-proof/issues/16
       var accounts_float = require('./data/accounts_float.json');
       var complete_tree = blproof.generateCompleteTree(accounts_float);
-      should.strictEqual(complete_tree.root().data.value.toString(), '1e-7');
+      should.strictEqual(complete_tree.root().data.sum.toString(), '1e-7');
     });
   });
 });
