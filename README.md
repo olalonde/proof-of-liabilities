@@ -85,7 +85,7 @@ https://github.com/bifubao/proof_of_reserves
 ### Complete proof tree
   
 The complete proof tree is a binary tree where the leaf nodes
-represent all the user accounts and the interior nodes generated using the
+represent all the user accounts and the internal nodes generated using the
 NodeCombiner function described below.
 
 The complete tree should be kept private by the operator in order to
@@ -107,13 +107,13 @@ Leaf nodes represent user accounts. They possess the following values:
   - `nonce`: A random secret assigned by the operator to prevent neighbours
     from accidentally or deliberately discovering the value of `user` or `sum`
     (balance).
-  - `sum`: The user's balance (called `sum` for consistency with interior
+  - `sum`: The user's balance (called `sum` for consistency with internal
     nodes).
   - `hash`: SHA256(`user` + '|' + `sum` + '|' + `nonce`)
 
-### Interior node
+### Internal node
 
-Interior nodes are generated using the NodeCombiner function described
+Internal nodes are generated using the NodeCombiner function described
 below.
 
 The node's sum is the result of adding of its children's sums.
@@ -132,7 +132,7 @@ function NodeCombiner (left_child, right_child) {
 
 ### Root node
 
-The root node of the, tree like all interior nodes, possesses a hash and a sum.
+The root node of the, tree like all internal nodes, possesses a hash and a sum.
 This data must be published publicly so that all users can ensure they're
 verifying against the same proof tree.
 
@@ -162,7 +162,7 @@ verify the proof, learning an absolute minimum about their neigbours.
 This section is intended to standardize the way root nodes and trees are
 generated and represented in order to make implementations compatible.
 
-### Hashing
+### Hashing leaf nodes
 
 To be accepted by conforming verifier tools, leaf (account) node hashes must be
 computed using:
@@ -197,6 +197,8 @@ producing (hexadecimal-encoded) hash:
 
     1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b
 
+### Hashing internal nodes
+
 Internal (non-account) node hashes must be computed using:
 
     SHA256(string(sum) + '|' + left_child.hash + '|' + right_child.hash)
@@ -224,7 +226,7 @@ producing (hexadecimal-encoded) hash:
 
     365a82cbacdae592a3606786addbc38efcc60e857e35451d5e332070b1b31e91
 
-### Root node:
+### Root node
 
 A JSON object:
 
@@ -254,7 +256,7 @@ Example:
 }
 ```
 
-### Partial trees:
+### Partial trees
 
 Partial trees are represented as a JSON object graph made up of nodes.  Each
 node has the following format:
