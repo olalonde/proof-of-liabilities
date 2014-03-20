@@ -241,7 +241,9 @@ A JSON object:
 strings.  `hash` is encoded as a hexadecimal string.  The contents of string
 `sum` **should** be identical to the hashed representation, but equivalents
 with fewer decimal places or no fractional part that still match the regex are
-allowed.  Example:
+allowed.
+
+Example:
 
 ```javascript
 { 
