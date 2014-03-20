@@ -177,7 +177,7 @@ but specifically:
    SHA256 input
  * `string(sum)` is a string representation of the balance for the
    corresponding account, matching the regular expression
-   `^(0|([1-9][0-9]*))(\.[0-9]+)?$` (or informally, the [JSON 'number'][jsonum]
+   `^(0|[1-9][0-9]*)(\.[0-9]+)?$` (or informally, the [JSON 'number'][jsonum]
    format but no negative numbers and no 'e' notation).
    For Bitcoin-denominated liabilities this hashed representation **must** have
    exactly 8 decimal places.  **Any conversion performed to produce or consume
