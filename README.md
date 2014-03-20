@@ -322,7 +322,7 @@ Trees should ideally be given [random layouts][random] normally but when
 accepting this form for testing you should produce the tree with a
 deterministic algorithm:
 
- * pad out the accounts list size to the nearest power of two, using accounts
+ * pad out the accounts list size to the next power of two, using accounts
    with user "dummy", balance "0.00000000" and nonce "0"
  * produce a [perfect binary tree][perfect]
  * ensure that a traversal of the tree would visit the leaf nodes in the same
