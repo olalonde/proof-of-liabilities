@@ -179,13 +179,28 @@ but specifically:
    corresponding account, matching the regular expression
    `^(0|[1-9][0-9]*)(\.[0-9]+)?$` (or informally, the [JSON 'number'][jsonum]
    format but no negative numbers and no 'e' notation).
-   For Bitcoin-denominated liabilities this hashed representation **must** have
-   exactly 8 decimal places.  **Any conversion performed to produce or consume
-   it [should be done very carefully][pmh]**.
+   This representation **must** be in the shortest possible form allowed by the
+   regular expression, achieved by [stripping trailing zero digits][strip] from
+   the fractional part.  The representation **should not** use more decimal
+   places than required to represent the currency's [smallest
+   subunit][subunit]; if the operator's system uses more decimal places, the
+   value **should** be [rounded towards +∞][ceiling] to the next subunit before
+   hashing/serialisation.
+   **Any conversion performed to produce or consume it [should be done very
+   carefully][pmh]**.
+   Examples:
+    * given $0, use `0`, not `0.0` or `0.000`
+    * given $1.23 use `1.23`, not `1.230` or `1.23000000`
+    * given $1.20 use `1.2`, not `1.20` or `1.20000`
+    * *prefer* to round $1234.5678 to $1234.57 before any
+      serialisation/hashing
  * `nonce` is encoded as a hexadecimal string.
 
  [jsonum]: http://www.json.org/number
  [pmh]: https://en.bitcoin.it/wiki/Proper_Money_Handling_%28JSON-RPC%29
+ [strip]: http://docs.oracle.com/javase/1.5.0/docs/api/java/math/BigDecimal.html#stripTrailingZeros%28%29
+ [subunit]: https://en.wikipedia.org/wiki/Denomination_%28currency%29#Subunit_and_super_unit
+ [ceiling]: http://docs.oracle.com/javase/6/docs/api/java/math/RoundingMode.html#CEILING
 
 Example: if user `frank@example.com` had a balance of `3.1415` bitcoins and had
 been been assigned nonce `e3b0c44298fc1c149afbf4c8996fb924` by the operator,
