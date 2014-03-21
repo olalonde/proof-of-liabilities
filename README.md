@@ -185,15 +185,15 @@ but specifically:
    places than required to represent the currency's [smallest
    subunit][subunit]; if the operator's system uses more decimal places, the
    value **should** be [rounded towards +∞][ceiling] to the next subunit before
-   hashing/serialisation.
+   any use (addition/hashing/serialisation) in this scheme.
    **Any conversion performed to produce or consume it [should be done very
    carefully][pmh]**.
    Examples:
     * given $0, use `0`, not `0.0` or `0.000`
     * given $1.23 use `1.23`, not `1.230` or `1.23000000`
     * given $1.20 use `1.2`, not `1.20` or `1.20000`
-    * *prefer* to round $1234.5678 to $1234.57 before any
-      serialisation/hashing
+    * given $20.00 use `20`, not `20.00` or `20.000000`
+    * *prefer* to round $1234.5678 to $1234.57 before any use in this scheme
  * `nonce` is encoded as a hexadecimal string.
 
  [jsonum]: http://www.json.org/number
