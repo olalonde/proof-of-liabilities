@@ -257,15 +257,17 @@ A JSON object:
 `hash` and `sum` are calculated as [described above](#hashing-internal-nodes);
 both are JSON strings.  `hash` is encoded as a 64-digit hexadecimal string
 with lowercase letters.  The contents of string `sum` **should** be identical
-to the hashed representation, but equivalents with fewer decimal places or no
-fractional part that still match the regex are allowed.
+to the [representation used in hashing](#hashing-internal-nodes), but
+equivalents (which add a fractional part with zeros in all decimal places, or
+which add trailing zeros to an existing fractional part) that still match the
+regex are allowed.
 
 Example:
 
 ```javascript
 { 
   "root": {
-    "sum": "37618.00000000",
+    "sum": "37618",
     "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   }
 }
@@ -288,9 +290,10 @@ node has the following format:
 name/value pairs:
 
  * `sum` (JSON string): as [described above](#hashing-internal-nodes).  The
-   contents **should** be identical to the hashed representation, but
-   equivalents with fewer decimal places or no fractional part that still match
-   the regex are allowed.
+   contents **should** be identical to the [representation used in
+   hashing](#hashing-internal-nodes), but equivalents (which add a fractional
+   part with zeros in all decimal places, or which add trailing zeros to an
+   existing fractional part) that still match the regex are allowed.
      * Immediate children of nodes on the root path **must** have this key set.
      * Other nodes **should not** have this key set.
  * `hash` (JSON string): generated as [described
@@ -308,6 +311,29 @@ name/value pairs:
      * The node belonging to the user this partial tree was generated for **must**
        have this key set.
      * All other nodes **must not** have this key set.
+
+If redundant keys are omitted as suggested, the `"data": <node_data>` key/value
+pair will have an empty object (`{}`) for `<node_data>`, in which case the
+key/value pair **should** be omitted.
+
+Example leaf node's `<node_data>`:
+
+```javascript
+{
+  "user": "frank@example.com",
+  "sum": "3.1415",
+  "nonce": "e3b0c44298fc1c149afbf4c8996fb924",
+}
+```
+
+Example `<node_data>` for an immediate child of a node on the root path:
+
+```javascript
+{
+  "sum": "71.31",
+  "hash": "81dbc2416e7ead6a4ac1db605c56e293119a7ed65f3c80fdf1abbceeef22ac15"
+}
+```
 
 ### Account lists
 
