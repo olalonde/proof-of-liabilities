@@ -14,6 +14,8 @@ privacy of individual users.
 The Proof of Liabilities scheme can be used as part of the broader 
 [Proof of Solvency](pos) scheme.
 
+[pos]: https://github.com/olalonde/blind-solvency-proof 
+
 [Proof of Liabilities online tools](http://olalonde.github.io/blind-liability-proof)
 
 <!-- Generated with doctoc -->
@@ -29,7 +31,6 @@ The Proof of Liabilities scheme can be used as part of the broader
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
-  [pos]: https://github.com/olalonde/blind-solvency-proof 
 
 ## Install
 
