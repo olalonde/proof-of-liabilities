@@ -5,7 +5,7 @@
 
 *Proof of Liabilities* specification and Javascript implementation.
 
-Proof of Liabilities (PoL) is scheme designed to let entitites
+Proof of Liabilities (PoL) is a scheme designed to let entitities
 (operators) that accept monetary deposits from consumers (e.g. Bitcoin exchanges,
 gambling websites, online Bitcoin wallets, etc.) prove the total amount
 of their deposits (their liabilities) to their users without compromising the
