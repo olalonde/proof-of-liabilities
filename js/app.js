@@ -179,18 +179,18 @@ $(function () {
       error(err, 'generate');
     }
 
-    complete_tree = blproof.generateCompleteTree(accounts);
+    complete_tree = lproof.generateCompleteTree(accounts);
 
     var root = complete_tree.root();
 
     //@hack
     twice(function () {
-      $('#expected_root').html(blproof.serializeRoot(complete_tree));
+      $('#expected_root').html(lproof.serializeRoot(complete_tree));
     });
 
     $('#complete_tree').html(serialize(complete_tree));
     $('#complete_tree_pretty').html(complete_tree.prettyPrintStr(format));
-    $('#root').html(blproof.serializeRoot(complete_tree));
+    $('#root').html(lproof.serializeRoot(complete_tree));
 
     // Populate select
     var html = '';
@@ -209,10 +209,10 @@ $(function () {
     var user = this.value;
     var partial_tree = partial_trees[user];
     if (!partial_tree) {
-      partial_tree = blproof.extractPartialTree(complete_tree, user);
+      partial_tree = lproof.extractPartialTree(complete_tree, user);
       partial_trees[user] = partial_tree;
     }
-    var serialized = JSON.parse(blproof.serializePartialTree(partial_tree));
+    var serialized = JSON.parse(lproof.serializePartialTree(partial_tree));
     $('#partial_tree_for').html(serialize(serialized));
     $('#partial_tree_for_pretty').html(partial_tree.prettyPrintStr(format));
     //@hack
@@ -232,10 +232,10 @@ $(function () {
     var html = '';
 
     try {
-      var partial_tree = blproof.deserializePartialTree($('#partial_tree').val());
-      var expected_root = blproof.deserializeRoot($('#expected_root').val());
+      var partial_tree = lproof.deserializePartialTree($('#partial_tree').val());
+      var expected_root = lproof.deserializeRoot($('#expected_root').val());
 
-      res = blproof.verifyTree(partial_tree, expected_root);
+      res = lproof.verifyTree(partial_tree, expected_root);
     }
     catch (err) {
       html += '<h4>Verification failed!</h4>';
@@ -276,7 +276,7 @@ $(function () {
     }
 
     try {
-      partial_tree = blproof.deserializePartialTree($('#ugly_json').val());
+      partial_tree = lproof.deserializePartialTree($('#ugly_json').val());
       $('#pretty_tree').html(partial_tree.prettyPrintStr(format));
       $('#pretty_tree').show();
     }
