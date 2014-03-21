@@ -26,7 +26,7 @@ function format (obj) {
 
   var res = '';
   var sep = '';
-  ['user', 'nonce', 'value', 'hash'].forEach(function (prop) {
+  ['user', 'nonce', 'sum', 'hash'].forEach(function (prop) {
     if (data[prop]) {
       res += sep;
       if (prop === 'user') {
@@ -154,7 +154,7 @@ $(function () {
     html += '<h4>Verification successful!</h4>';
     html += 'User: ' + res.user;
     html += '<br>';
-    html += 'Balance: ' + res.value;
+    html += 'Balance: ' + res.sum;
 
     $('#verification').removeClass('alert-danger').addClass('alert-success').html(html);
     $('#verify_results').show();
