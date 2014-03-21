@@ -1,7 +1,7 @@
 
 # Proof of Liabilities
 
-[![Build Status](https://travis-ci.org/olalonde/blind-liability-proof.png)](https://travis-ci.org/olalonde/blind-liability-proof)
+[![Build Status](https://travis-ci.org/olalonde/proof-of-liabilities.png)](https://travis-ci.org/olalonde/proof-of-liabilities)
 
 *Proof of Liabilities* specification and Javascript implementation.
 
@@ -14,9 +14,9 @@ privacy of individual users.
 The Proof of Liabilities scheme can be used as part of the broader 
 [Proof of Solvency][pos] scheme.
 
-[pos]: https://github.com/olalonde/blind-solvency-proof 
+[pos]: https://github.com/olalonde/proof-of-solvency
 
-[Proof of Liabilities online tools](http://olalonde.github.io/blind-liability-proof)
+[Proof of Liabilities online tools](http://olalonde.github.io/proof-of-liabilities)
 
 **Table of Contents**
 
@@ -117,7 +117,7 @@ own [partial proof tree](#partial-proof-tree).
 
 Ideally the tree layout [should be random][random].
 
- [random]: /olalonde/blind-liability-proof/issues/4
+ [random]: /olalonde/proof-of-liabilities/issues/4
 
 #### Leaf node
 
@@ -399,7 +399,7 @@ which makes tests shareable.
 
 ### Publishing protocol
 
-See [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof#assets-proof).
+See [olalonde/proof-of-solvency](https://github.com/olalonde/proof-of-solvency#liabilities-proof).
 
 ## References
 
