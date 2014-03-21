@@ -1851,6 +1851,7 @@ var Tree = _dereq_('./tree'),
 // exponent notation is not allowed by specification
 Big.prototype.toString = helpers.bigToString;
 
+
 function big(val) {
   return (val instanceof Big) ? val : new Big(val);
 }
@@ -1887,11 +1888,33 @@ function combine_nodes (left_node, right_node) {
   return n;
 }
 
+function generate_leaf_hash (user, sum, nonce) {
+  return sha256(user + '|' + big(sum) + '|' + nonce);
+}
+
 // @todo: since all nodes are at same tree level, this might
 // leak information about number of users. randomize tree structure!?
 // add fake nodes with 0 balance? maybe all right leaf node should be a dummy user?
 function generate_complete_tree (accounts) {
   var mode = 'default';
+
+  // first account has nonce set triggers deterministic mode
+  if (accounts[0].nonce) {
+    mode = 'deterministic';
+  }
+
+  // Generate deterministic tree
+  if (mode === 'deterministic') {
+    // Pad out accounts to get a power of 2 to get a perfect binary tree
+    var next_power_of_2 = 0;
+    // Find next power of 2
+    for (var i = 0; next_power_of_2 < accounts.length; i++) {
+      next_power_of_2 = Math.pow(2, i);
+    }
+    while (accounts.length < next_power_of_2) {
+      accounts.push({ user: 'dummy', balance: '0', nonce: '0' });
+    }
+  }
 
   // Generate initial hash / sum for leaf nodes
   accounts.forEach(function (account) {
@@ -1902,22 +1925,9 @@ function generate_complete_tree (accounts) {
     account.sum = big(account.balance);
     // make it possible to specify nonce in account.json for testing implementations
     account.nonce = '' + (account.nonce || nonce());
-    account.hash = sha256(account.user + '|' + account.balance + '|' + account.nonce);
+    account.hash = generate_leaf_hash(account.user, account.sum, account.nonce);
     delete account.balance;
   });
-
-  // Generate deterministic tree
-  if (mode === 'test') {
-    // Pad out accounts to get a power of 2 to get a perfect binary tree
-    var next_power_of_2 = 1;
-    // Find next power of 2
-    while (next_power_of_2 < accounts.length) {
-      next_power_of_2 = Math.pow(next_power_of_2, 2);
-    }
-    while (accounts.length < next_power_of_2) {
-      accounts.push({ user: 'dummy', balance: '0', nonce: '0' });
-    }
-  }
 
   // Accounts must be on the leaf nodes of the tree
   // so we need to find out how many interior nodes we should generate.
@@ -2014,7 +2024,7 @@ function generate_internal_nodes (tree) {
     }
     // leaf nodes
     else if (!node.data.hash) {
-      node.data.hash = sha256(node.data.user + '|' + node.data.sum + '|' + node.data.nonce);
+      node.data.hash = generate_leaf_hash(node.data.user, node.data.sum, node.data.nonce);
     }
   });
 }
@@ -2064,6 +2074,8 @@ function verify_tree (tree, expected_root_data) {
   return user_node.data;
 }
 
+// @TODO: make sure to use big()'s stringification for numbers
+// @TODO: maybe refactor all this to have a consistent .serialize method on tree objects / nodes?
 function serialize_partial_tree (ptree, id) {
   var obj = {
     id: id,
