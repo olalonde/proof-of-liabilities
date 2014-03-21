@@ -1,70 +1,70 @@
 [
   {
     "user": "olalonde",
-    "balance": 4045
+    "balance": "4045"
   },
   {
     "user": "gmaxwell",
-    "balance": 6905
+    "balance": "6905"
   },
   {
     "user": "satoshi",
-    "balance": 10000
+    "balance": "10000"
   },
   {
     "user": "luke-jr",
-    "balance": 300
+    "balance": "300"
   },
   {
     "user": "sipa",
-    "balance": 3027
+    "balance": "3027"
   },
   {
     "user": "codeshark",
-    "balance": 200
+    "balance": "200"
   },
   {
     "user": "gribble",
-    "balance": 15
+    "balance": "15"
   },
   {
     "user": "alice",
-    "balance": 0
+    "balance": "0"
   },
   {
     "user": "bob",
-    "balance": 12
+    "balance": "12"
   },
   {
     "user": "charlie",
-    "balance": 9427
+    "balance": "9427"
   },
   {
     "user": "mark",
-    "balance": 462
+    "balance": "462"
   },
   {
     "user": "anax",
-    "balance": 12
+    "balance": "12"
   },
   {
     "user": "gavin",
-    "balance": 3020
+    "balance": "3020"
   },
   {
     "user": "stacy",
-    "balance": 68
+    "balance": "68"
   },
   {
     "user": "justin",
-    "balance": 3
+    "balance": "3"
   },
   {
     "user": "einstein",
-    "balance": 39
+    "balance": "39"
   },
   {
     "user": "picasso",
-    "balance": 83
+    "balance": "83"
   }
 ]
