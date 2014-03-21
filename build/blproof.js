@@ -1851,6 +1851,7 @@ var Tree = _dereq_('./tree'),
 // exponent notation is not allowed by specification
 Big.prototype.toString = helpers.bigToString;
 
+
 function big(val) {
   return (val instanceof Big) ? val : new Big(val);
 }
@@ -1887,6 +1888,10 @@ function combine_nodes (left_node, right_node) {
   return n;
 }
 
+function generate_leaf_hash (user, sum, nonce) {
+  return sha256(user + '|' + big(sum) + '|' + nonce);
+}
+
 // @todo: since all nodes are at same tree level, this might
 // leak information about number of users. randomize tree structure!?
 // add fake nodes with 0 balance? maybe all right leaf node should be a dummy user?
@@ -1920,7 +1925,7 @@ function generate_complete_tree (accounts) {
     account.sum = big(account.balance);
     // make it possible to specify nonce in account.json for testing implementations
     account.nonce = '' + (account.nonce || nonce());
-    account.hash = sha256(account.user + '|' + account.sum + '|' + account.nonce);
+    account.hash = generate_leaf_hash(account.user, account.sum, account.nonce);
     delete account.balance;
   });
 
@@ -2019,7 +2024,7 @@ function generate_internal_nodes (tree) {
     }
     // leaf nodes
     else if (!node.data.hash) {
-      node.data.hash = sha256(node.data.user + '|' + node.data.sum + '|' + node.data.nonce);
+      node.data.hash = generate_leaf_hash(node.data.user, node.data.sum, node.data.nonce);
     }
   });
 }
@@ -2069,6 +2074,8 @@ function verify_tree (tree, expected_root_data) {
   return user_node.data;
 }
 
+// @TODO: make sure to use big()'s stringification for numbers
+// @TODO: maybe refactor all this to have a consistent .serialize method on tree objects / nodes?
 function serialize_partial_tree (ptree, id) {
   var obj = {
     id: id,
