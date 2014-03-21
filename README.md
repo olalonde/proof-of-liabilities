@@ -1,3 +1,4 @@
+
 # Proof of Liabilities
 
 [![Build Status](https://travis-ci.org/olalonde/blind-liability-proof.png)](https://travis-ci.org/olalonde/blind-liability-proof)
@@ -13,8 +14,28 @@ privacy of individual users.
 The Proof of Liabilities scheme can be used as part of the broader 
 [Proof of Solvency](pos) scheme.
 
-* auto-gen TOC:
-{:toc}
+[Proof of Liabilities online tools](http://olalonde.github.io/blind-liability-proof)
+
+<!-- Generated with doctoc -->
+- [Install](#install)
+- [Usage](#usage)
+- [Library usage](#library-usage)
+- [Implementations](#implementations)
+- [Specification](#specification)
+  - [Definitions](#definitions)
+    - [Complete proof tree](#complete-proof-tree)
+    - [Leaf node](#leaf-node)
+    - [Internal node](#internal-node)
+    - [Root node](#root-node)
+    - [Partial proof tree](#partial-proof-tree)
+  - [Serialized data formats (work in progress / draft)](#serialized-data-formats-work-in-progress--draft)
+    - [Hashing leaf nodes](#hashing-leaf-nodes)
+    - [Hashing internal nodes](#hashing-internal-nodes)
+    - [Root node](#root-node-1)
+    - [Partial trees](#partial-trees)
+    - [Account lists](#account-lists)
+  - [Publishing protocol](#publishing-protocol)
+- [References](#references)
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
 
@@ -76,7 +97,10 @@ See `cli.js`.
 
 Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 
-## Other implementations
+## Implementations
+
+Those are other implementations of the Proof of Liabilities scheme but they
+haven't all been tested.
 
 Clojure: https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree.clj
 
