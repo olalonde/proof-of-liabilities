@@ -18,7 +18,8 @@ The Proof of Liabilities scheme can be used as part of the broader
 
 [Proof of Liabilities online tools](http://olalonde.github.io/blind-liability-proof)
 
-<!-- Generated with doctoc -->
+**Table of Contents**
+
 - [Install](#install)
 - [Usage](#usage)
 - [Library usage](#library-usage)
