@@ -1844,7 +1844,12 @@ module.exports = _dereq_('./lib/blproof');
 },{"./lib/blproof":11}],11:[function(_dereq_,module,exports){
 var Tree = _dereq_('./tree'),
   crypto = _dereq_('crypto'),
+  helpers = _dereq_('./helpers'),
   Big = _dereq_('big.js');
+
+// monkey patch Big to disable exponent notation when calling toSring
+// exponent notation is not allowed by specification
+Big.prototype.toString = helpers.bigToString;
 
 function big(val) {
   return (val instanceof Big) ? val : new Big(val);
@@ -2095,7 +2100,43 @@ module.exports.serializeRoot = serialize_root;
 module.exports.deserializeRoot = deserialize_root;
 module.exports.verifyTree = verify_tree;
 
-},{"./tree":12,"big.js":13,"crypto":5}],12:[function(_dereq_,module,exports){
+},{"./helpers":12,"./tree":13,"big.js":14,"crypto":5}],12:[function(_dereq_,module,exports){
+// slightly modified version of https://github.com/MikeMcl/big.js/blob/master/big.js#L834
+module.exports.bigToString = function  () {
+  var x = this,
+  e = x['e'],
+  str = x['c'].join(''),
+  strL = str.length;
+
+  // Negative exponent?
+  if ( e < 0 ) {
+    // Prepend zeros.
+    for ( ; ++e; str = '0' + str ) {
+    }
+    str = '0.' + str;
+
+    // Positive exponent?
+  } else if ( e > 0 ) {
+
+    if ( ++e > strL ) {
+
+      // Append zeros.
+      for ( e -= strL; e-- ; str += '0' ) {
+      }
+    } else if ( e < strL ) {
+      str = str.slice( 0, e ) + '.' + str.slice(e);
+    }
+
+    // Exponent zero.
+  } else if ( strL > 1 ) {
+    str = str.charAt(0) + '.' + str.slice(1);
+  }
+
+  // Avoid '-0'
+  return x['s'] < 0 && x['c'][0] ? '-' + str : str;
+};
+
+},{}],13:[function(_dereq_,module,exports){
 //var util = require('util');
 
 // Simple perfect binary tree implementation
@@ -2363,7 +2404,7 @@ Tree.deserializeFromArray = function (str) {
 
 module.exports = Tree;
 
-},{}],13:[function(_dereq_,module,exports){
+},{}],14:[function(_dereq_,module,exports){
 /* big.js v2.5.0 https://github.com/MikeMcl/big.js/LICENCE */
 ;(function ( global ) {
     'use strict';

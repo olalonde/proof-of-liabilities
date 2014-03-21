@@ -206,7 +206,7 @@ describe('Generating complete tree', function () {
       // @see https://github.com/olalonde/blind-liability-proof/issues/16
       var accounts_float = require('./data/accounts_float.json');
       var complete_tree = blproof.generateCompleteTree(accounts_float);
-      should.strictEqual(complete_tree.root().data.sum.toString(), '1e-7');
+      should.strictEqual(complete_tree.root().data.sum.toString(), '0.0000001');
     });
   });
 });
