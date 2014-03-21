@@ -12,7 +12,7 @@ of their deposits (their liabilities) to their users without compromising the
 privacy of individual users.
 
 The Proof of Liabilities scheme can be used as part of the broader 
-[Proof of Solvency](pos) scheme.
+[Proof of Solvency][pos] scheme.
 
 [pos]: https://github.com/olalonde/blind-solvency-proof 
 
