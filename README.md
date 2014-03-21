@@ -94,7 +94,7 @@ Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 Those are other implementations of the Proof of Liabilities scheme but they
 haven't all been tested.
 
-Clojure: https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree.clj
+Clojure: https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree
 
 Python: https://github.com/ConceptPending/proveit
 
