@@ -206,11 +206,11 @@ Example: if user `frank@example.com` had a balance of `3.1415` bitcoins and had
 been been assigned nonce `e3b0c44298fc1c149afbf4c8996fb924` by the operator,
 the hash would take the following string as input:
 
-    frank@example.com|3.14150000|e3b0c44298fc1c149afbf4c8996fb924
+    frank@example.com|3.1415|e3b0c44298fc1c149afbf4c8996fb924
 
 producing (hexadecimal-encoded) hash:
 
-    1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b
+    7856aa35ddcf71ab84d18c16d5ac1b90b19e6d54e932d972595235d343c17461
 
 ### Hashing internal nodes
 
@@ -226,20 +226,20 @@ where `sum`, `left_child.hash` and `right_child.hash` have the same meanings
    SHA256 input
  * `string(sum)` is as above for leaf nodes, except represents the liabilities
    sum for the subtree.
- * `left_child.hash`(/`right_child.hash`) is the hexadecimal string
-   encoding of the left(/right) child's hash
+ * `left_child.hash`(/`right_child.hash`) is the 64-digit hexadecimal string
+   encoding (with lowercase letters) of the left(/right) child's hash
 
 Example: if an internal node had a subtree liability sum of `71.31` bitcoins
 and child nodes with (hexadecimal-encoded) hashes of
-`1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b` (left) and
+`000d5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b` (left) and
 `20aa3f466728a58182a9b7733fcb70044ab489a27554d9fb7ed520936759bf96` (right), the
 hash would take the following string as input:
 
-    71.31000000|1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b|20aa3f466728a58182a9b7733fcb70044ab489a27554d9fb7ed520936759bf96
+    71.31|000d5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b|20aa3f466728a58182a9b7733fcb70044ab489a27554d9fb7ed520936759bf96
 
 producing (hexadecimal-encoded) hash:
 
-    365a82cbacdae592a3606786addbc38efcc60e857e35451d5e332070b1b31e91
+    81dbc2416e7ead6a4ac1db605c56e293119a7ed65f3c80fdf1abbceeef22ac15
 
 ### Root node
 
