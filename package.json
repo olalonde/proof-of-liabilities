@@ -1,7 +1,7 @@
 {
-  "name": "blproof",
+  "name": "lproof",
   "version": "0.0.14",
-  "description": "Blind liability proof tool",
+  "description": "Proof of Liabilities (PoL) library and CLI",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -22,7 +22,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec test/"
   },
   "bin": {
-    "blproof": "./cli.js"
+    "lproof": "./cli.js"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,8 @@
   "homepage": "http://olalonde.github.io/blind-liability-proof",
   "keywords": [
     "bitcoin",
+    "pol",
+    "proof of liability",
     "liability",
     "proof",
     "cryptography",

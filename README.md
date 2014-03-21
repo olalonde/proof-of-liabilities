@@ -1,22 +1,45 @@
-# blproof - Blind liability proof
+
+# Proof of Liabilities
 
 [![Build Status](https://travis-ci.org/olalonde/blind-liability-proof.png)](https://travis-ci.org/olalonde/blind-liability-proof)
 
-Intended for use as part of the
-[olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof)
-scheme.
+*Proof of Liabilities* specification and Javascript implementation.
 
-*NEW*: [web UI](http://olalonde.github.io/blind-liability-proof)
+Proof of Liabilities (PoL) is scheme designed to let entitites
+(operators) that accept monetary deposits from consumers (e.g. Bitcoin exchanges,
+gambling websites, online Bitcoin wallets, etc.) prove the total amount
+of their deposits (their liabilities) to their users without compromising the
+privacy of individual users.
+
+The Proof of Liabilities scheme can be used as part of the broader 
+[Proof of Solvency](pos) scheme.
+
+[pos]: https://github.com/olalonde/blind-solvency-proof 
+
+[Proof of Liabilities online tools](http://olalonde.github.io/blind-liability-proof)
+
+**Table of Contents**
+
+- [Install](#install)
+- [Usage](#usage)
+- [Library usage](#library-usage)
+- [Implementations](#implementations)
+- [Specification](#specification)
+  - [Definitions](#definitions)
+  - [Serialized data formats (work in progress / draft)](#serialized-data-formats-work-in-progress--draft)
+  - [Publishing protocol](#publishing-protocol)
+- [References](#references)
 
 Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
+
 
 ## Install
 
 ```
-npm install -g blproof
+npm install -g lproof
 ```
 
-## CLI Usage
+## Usage
 
 Simple usage:
 
@@ -26,15 +49,15 @@ Simple usage:
 # complete_tree.json and root.json will be saved to current directory.
 # For a sample accounts file, refer to test/accounts.json.
 
-$ blproof generate -f accounts.json
+$ lproof generate -f accounts.json
 
 # Verify a partial tree 
 
-$ blproof verify --root root.json -f partial_trees/satoshi.json
+$ lproof verify --root root.json -f partial_trees/satoshi.json
 
 # or (where hash is the root hash and sum is the root sum)
 
-$ blproof verify --hash "1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b" --sum 37618 -f mark.json
+$ lproof verify --hash "1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b" --sum 37618 -f mark.json
 ```
 
 Advanced usage: 
@@ -43,46 +66,45 @@ Advanced usage:
 # Create complete proof tree from an accounts file (see
 # test/account.json for format)
 
-$ blproof completetree -f test/accounts.json --human
-$ blproof completetree -f test/accounts.json > complete.out.json
+$ lproof completetree -f test/accounts.json --human
+$ lproof completetree -f test/accounts.json > complete.out.json
 
 # Extract partial tree for user mark.
 
-$ blproof partialtree mark -f complete.out.json --human
-$ blproof partialtree mark -f complete.out.json > mark.out.json
+$ lproof partialtree mark -f complete.out.json --human
+$ lproof partialtree mark -f complete.out.json > mark.out.json
 
 # Display root node hash and sum
 
-$ blproof root -f complete.out.json --human
+$ lproof root -f complete.out.json --human
 
 # Verify partial tree
 
-$ blproof verify --hash "1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b" --sum 37618 -f mark.out.json
+$  verify --hash "1ded5478d0116b30aca091f8d5ddd2340d9391dca47a41d9271e61ede51c0f6b" --sum 37618 -f mark.out.json
 ```
 
 ## Library usage
 
 See `cli.js`. 
 
-Browser build: `browserify index.js --standalone blproof > build/blproof.js`.
+Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 
-## Other implementations
+## Implementations
 
-Clojure:
+Those are other implementations of the Proof of Liabilities scheme but they
+haven't all been tested.
 
-https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree.clj
+Clojure: https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree.clj
 
-Python:
+Python: https://github.com/ConceptPending/proveit
 
-https://github.com/ConceptPending/proveit
+C++: https://github.com/bifubao/proof_of_reserves
 
-C++:
+## Specification
 
-https://github.com/bifubao/proof_of_reserves
+### Definitions
 
-## Definitions
-
-### Complete proof tree
+#### Complete proof tree
   
 The complete proof tree is a binary tree where the leaf nodes
 represent all the user accounts and the internal nodes generated using the
@@ -97,7 +119,7 @@ Ideally the tree layout [should be random][random].
 
  [random]: /olalonde/blind-liability-proof/issues/4
 
-### Leaf node
+#### Leaf node
 
 Leaf nodes represent user accounts. They possess the following values:
 
@@ -111,7 +133,7 @@ Leaf nodes represent user accounts. They possess the following values:
     nodes).
   - `hash`: SHA256(`user` + '|' + `sum` + '|' + `nonce`)
 
-### Internal node
+#### Internal node
 
 Internal nodes are generated using the NodeCombiner function described
 below.
@@ -130,13 +152,13 @@ function NodeCombiner (left_child, right_child) {
 }
 ```
 
-### Root node
+#### Root node
 
 The root node of the, tree like all internal nodes, possesses a hash and a sum.
 This data must be published publicly so that all users can ensure they're
 verifying against the same proof tree.
 
-### Partial proof tree
+#### Partial proof tree
 
 A partial proof tree contains only the nodes from the complete tree which a
 given user needs in order to verify he was included in the tree.
@@ -157,12 +179,12 @@ Then the sibling of each node on the path must be added to the tree.
 Partial trees should be disclosed privately to each individual user so they can
 verify the proof, learning an absolute minimum about their neigbours.
 
-## Serialized data formats (work in progress / draft)
+### Serialized data formats (work in progress / draft)
 
 This section is intended to standardize the way root nodes and trees are
 generated and represented in order to make implementations compatible.
 
-### Hashing leaf nodes
+#### Hashing leaf nodes
 
 To be accepted by conforming verifier tools, leaf (account) node hashes must be
 computed using:
@@ -212,7 +234,7 @@ producing (hexadecimal-encoded) hash:
 
     7856aa35ddcf71ab84d18c16d5ac1b90b19e6d54e932d972595235d343c17461
 
-### Hashing internal nodes
+#### Hashing internal nodes
 
 Internal (non-account) node hashes must be computed using:
 
@@ -241,7 +263,7 @@ producing (hexadecimal-encoded) hash:
 
     81dbc2416e7ead6a4ac1db605c56e293119a7ed65f3c80fdf1abbceeef22ac15
 
-### Root node
+#### Root node
 
 A JSON object:
 
@@ -273,7 +295,7 @@ Example:
 }
 ```
 
-### Partial trees
+#### Partial trees
 
 Partial trees are represented as a JSON object graph made up of nodes.  Each
 node has the following format:
@@ -335,7 +357,7 @@ Example `<node_data>` for an immediate child of a node on the root path:
 }
 ```
 
-### Account lists
+#### Account lists
 
 For the purposes of sharing test input and to help pin down inconsistencies
 between implementations, it would help if your implementation accepted an
@@ -375,7 +397,7 @@ which makes tests shareable.
 
  [perfect]: https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees
 
-## Publishing format 
+### Publishing protocol
 
 See [olalonde/blind-solvency-proof](https://github.com/olalonde/blind-solvency-proof#assets-proof).
 
