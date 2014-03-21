@@ -27,7 +27,7 @@ function format (obj) {
   var res = '';
   var sep = '';
   ['user', 'nonce', 'sum', 'hash'].forEach(function (prop) {
-    if (data[prop]) {
+    if (prop in data) {
       res += sep;
       if (prop === 'user') {
         res += '<span class="label label-primary">' + data[prop] + '</span>';
@@ -158,6 +158,36 @@ $(function () {
 
     $('#verification').removeClass('alert-danger').addClass('alert-success').html(html);
     $('#verify_results').show();
+  });
+});
+
+// Prettify
+$(function () {
+  $('#btn_prettify').on('click', function (e) {
+    e.preventDefault();
+    $('#prettify .flash').hide();
+
+    var ugly_json = $('#ugly_json').val();
+
+    var partial_tree, pretty_json;
+
+    try {
+      pretty_json = JSON.stringify(JSON.parse(ugly_json), null, 2);
+      $('#pretty_json').html(pretty_json);
+    }
+    catch (err) {
+      $('#pretty_json').html('');
+      error(err, 'prettify');
+    }
+
+    try {
+      partial_tree = blproof.deserializePartialTree($('#ugly_json').val());
+      $('#pretty_tree').html(partial_tree.prettyPrintStr(format));
+      $('#pretty_tree').show();
+    }
+    catch (err) {
+      $('#pretty_tree').hide();
+    }
   });
 });
 

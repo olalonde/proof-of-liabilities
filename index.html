@@ -43,6 +43,7 @@
           <ul class="nav navbar-nav">
             <li class="active"><a data-toggle="tab" href="#generate">Generate</a></li>
             <li><a data-toggle="tab" href="#verify">Verify</a></li>
+            <li><a data-toggle="tab" href="#prettify">Prettify</a></li>
             <li><a href="https://github.com/olalonde/blind-liability-proof#blproof---blind-liability-proof">What is this?</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
@@ -142,6 +143,31 @@
             <fieldset id="verify_results" style="display:none">
               <legend>Result</legend>
               <p id="verification" class="alert"></p>
+            </fieldset>
+          </form>
+        </div>
+        <div class="tab-pane" id="prettify">
+          <div class="alert alert-danger flash" style="display:none">
+            <h4></h4>
+            <p></p>
+          </div>
+
+          <form action="/" class="form-horizontal" method="get">
+            <fieldset>
+              <legend>Prettify ugly JSON</legend>
+              <div class="form-group">
+                <label class="col-lg-2 control-label" for="ugly_json">Ugly JSON</label>
+                <div class="col-lg-10 controls">
+                  <textarea class="form-control" id="ugly_json" rows="3"></textarea>
+                  <br>
+                  <button id="btn_prettify" class="btn btn-primary">Prettify</button>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend>Prettyfication result</legend>
+              <pre id="pretty_tree" style="display:none"></pre>
+              <pre id="pretty_json"></pre>
             </fieldset>
           </form>
         </div>
