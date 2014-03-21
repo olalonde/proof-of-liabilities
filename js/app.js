@@ -44,18 +44,113 @@ function format (obj) {
   return res;
 }
 
-// Track tab in URL
-// see http://stackoverflow.com/questions/12131273/twitter-bootstrap-tabs-url-doesnt-change
-$(function(){
-  var hash = window.location.hash;
-  hash && $('.navbar-nav a[href="' + hash + '"]').tab('show');
+var route = (function () {
+  function parse_hash (hash) {
+    var action = 'generate', params = {};
+    var parts = hash.substr(1).split('?');
 
-  $('.navbar-nav a').click(function (e) {
-    $(this).tab('show');
+    action = parts[0] || action;
+
+    parts = parts[1] ? parts[1].split('&') : [];
+    parts.forEach(function (keyval) {
+      keyval = keyval.split('=');
+      keyval = keyval.map(function (val) { return decodeURIComponent(val); });
+
+      params[keyval[0]] = keyval[1];
+    });
+
+    return {
+      hash: hash,
+      action: action,
+      params: params
+    };
+  }
+
+  function route (hash) {
+    console.log('routing ' + hash);
+    var req = parse_hash(hash);
+
+    // scroll to top if action changed
+    //if (!window.lastReq || window.lastReq.action !== req.action) {
     var scrollmem = $('body').scrollTop();
-    window.location.hash = this.hash;
     $('html,body').scrollTop(scrollmem);
+    //}
+
+    // Activate nav link
+    //$('.navbar-nav li').removeClass('active');
+    $('.navbar-nav li a[href="#' + req.action +'"]').tab('show'); //.parent().addClass('active');
+
+    // set form inputs
+    for (var key in req.params) {
+      $('#' + key).val(req.params[key]);
+      //console.log('$("#' + key + '").trigger("change")');
+      $('#' + key).trigger('change');
+    }
+
+    // automatically "click" verify button if "shared link"
+    if (req.action === 'verify' && req.params.partial_tree && req.params.expected_root) {
+      $('#btn_verify').trigger('click');
+    }
+
+    history.pushState(null, null, req.hash);
+    window.lastReq = req;
+  }
+
+  return route;
+})();
+
+function reqToURL (req) {
+  var url = '#' + req.action;
+
+  var qstrings = [];
+  for (var key in req.params) {
+    var val = req.params[key];
+    qstrings.push(encodeURIComponent(key) + '=' + encodeURIComponent(val));
+  }
+  console.log(qstrings);
+
+  url = (qstrings) ? url + '?' + qstrings.join('&') : url;
+
+  return url;
+}
+
+// Update "share" links
+$(function () {
+  $('#generate-share').on('click', function (e) {
+    e.preventDefault();
+    window.location.hash = reqToURL({
+      action: 'generate',
+      params: { accounts: $('#accounts').val() }
+    });
   });
+  $('#verify-share').on('click', function (e) {
+    e.preventDefault();
+    window.location.hash = reqToURL({
+      action: 'verify',
+      params: {
+        partial_tree: $('#partial_tree').val(),
+        expected_root: $('#expected_root').val()
+      }
+    });
+  });
+
+  //$('#accounts').on('change', function () {
+    //$('#generate-share').attr('href', reqToURL({
+      //action: 'generate',
+      //params: { accounts: $(this).val() }
+    //}));
+  //});
+
+  //$('#partial_tree, #expected_root').on('change', function () {
+    //$('#verify-share').attr('href', reqToURL({
+      //action: 'verify',
+      //params: {
+        //partial_tree: $('#partial_tree').val(),
+        //expected_root: $('#expected_root').val()
+      //}
+    //}));
+  //});
+
 });
 
 // Generate
@@ -191,11 +286,32 @@ $(function () {
   });
 });
 
-$(function () {
-  $.get('accounts.json', function (data) {
-    $('#accounts').html(data);
+// Hash changes + navigation
+$(function() {
+  $('.navbar-nav a[href^="#"]').on('click', function (e) {
+    e.preventDefault();
+    route($(this).attr('href'));
+    return false;
+  });
 
-    $('#btn_generate').trigger('click');
-  }, 'text');
+  $(window).on('hashchange', function (e) {
+    e.preventDefault();
+    route(window.location.hash);
+    return false;
+  });
+
+  route(window.location.hash);
 });
 
+$(function () {
+  if ($('#accounts').val().trim() === '') {
+    $.get('accounts.json', function (data) {
+      $('#accounts').html(data);
+
+      $('#btn_generate').trigger('click');
+    }, 'text');
+  }
+  else {
+    $('#btn_generate').trigger('click');
+  }
+});

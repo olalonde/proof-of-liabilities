@@ -41,9 +41,9 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a data-toggle="tab" href="#generate">Generate</a></li>
-            <li><a data-toggle="tab" href="#verify">Verify</a></li>
-            <li><a data-toggle="tab" href="#prettify">Prettify</a></li>
+            <li class="active"><a href="#generate">Generate</a></li>
+            <li><a href="#verify">Verify</a></li>
+            <li><a href="#prettify">Prettify</a></li>
             <li><a href="https://github.com/olalonde/blind-liability-proof#blproof---blind-liability-proof">What is this?</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
@@ -80,8 +80,10 @@
                       </label> 
                       <label class="btn btn-default">
                         <input name="format" type="radio" value="json"> JSON
-                      </label> 
+                      </label>
                     </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#" id="generate-share">Share</a>
 
                 </div>
                 </div>
@@ -136,6 +138,8 @@
                   <textarea class="form-control" id="expected_root" rows="2"></textarea>
                   <br>
                   <button id="btn_verify" class="btn btn-primary">Verify</button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <a href="#verify" id="verify-share">Share</a>
                 </div>
 
               </div>
