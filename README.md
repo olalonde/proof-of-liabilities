@@ -240,10 +240,10 @@ A JSON object:
 ```
 
 `hash` and `sum` are calculated as [described above](#hashing-internal-nodes);
-both are JSON strings.  `hash` is encoded as a hexadecimal string.  The
-contents of string `sum` **should** be identical to the hashed representation,
-but equivalents with fewer decimal places or no fractional part that still
-match the regex are allowed.
+both are JSON strings.  `hash` is encoded as a 64-digit hexadecimal string
+with lowercase letters.  The contents of string `sum` **should** be identical
+to the hashed representation, but equivalents with fewer decimal places or no
+fractional part that still match the regex are allowed.
 
 Example:
 
@@ -279,7 +279,8 @@ name/value pairs:
      * Immediate children of nodes on the root path **must** have this key set.
      * Other nodes **should not** have this key set.
  * `hash` (JSON string): generated as [described
-   above](#hashing-internal-nodes), encoded as a hexadecimal string.
+   above](#hashing-internal-nodes), encoded as a 64-digit hexadecimal string
+   with lowercase letters.
      * Immediate children of nodes on the root path **must** have this key set.
      * Other nodes **should not** have this key set.
  * `user` (JSON string): The unique string chosen by the user.
@@ -287,7 +288,7 @@ name/value pairs:
        have this key set.
      * All other nodes **must not** have this key set.
  * `nonce` (JSON string): The nonce assigned to the user, encoded as a
-   hexadecimal string.
+   hexadecimal string with lowercase letters.
      * **Should** be at least 128 bits of cryptographically strong entropy.
      * The node belonging to the user this partial tree was generated for **must**
        have this key set.
