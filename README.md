@@ -1,15 +1,12 @@
-
 # Proof of Liabilities
 
 [![Build Status](https://travis-ci.org/olalonde/proof-of-liabilities.png)](https://travis-ci.org/olalonde/proof-of-liabilities)
 
 *Proof of Liabilities* specification and Javascript implementation.
 
-Proof of Liabilities (PoL) is scheme designed to let entitites
-(operators) that accept monetary deposits from consumers (e.g. Bitcoin exchanges,
-gambling websites, online Bitcoin wallets, etc.) prove the total amount
-of their deposits (their liabilities) to their users without compromising the
-privacy of individual users.
+Proof of Liabilities (PoL) is scheme designed to let companies that accept monetary deposits from consumers 
+(e.g. Bitcoin exchanges, gambling websites, online Bitcoin wallets, etc.) prove the total amount
+of deposits (their liabilities) to their users without compromising the privacy of individual users.
 
 The Proof of Liabilities scheme can be used as part of the broader 
 [Proof of Solvency][pos] scheme.
