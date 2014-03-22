@@ -291,7 +291,7 @@ regex are allowed.
 user balances were retrieved.
 
 [currency code]: http://en.wikipedia.org/wiki/Currency_codes
-[unix timestamp]: 
+[unix timestamp]: http://en.wikipedia.org/wiki/Unix_timestamp
 
 Example:
 
