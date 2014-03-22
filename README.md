@@ -266,11 +266,13 @@ producing (hexadecimal-encoded) hash:
 A JSON object:
 
 ```javascript
-{ 
+{
   "root": {
     "sum": <JSON string, as described above>,
     "hash": <JSON string, as described above>
-  }
+  },
+  "currency": <JSON string>,
+  "timestamp": <JSON string>
 }
 ```
 
@@ -282,10 +284,19 @@ equivalents (which add a fractional part with zeros in all decimal places, or
 which add trailing zeros to an existing fractional part) that still match the
 regex are allowed.
 
+`currency` is the 3 letter [ISO 4217][currency code] currency code or
+`XBT` for bitcoin.
+
+`timestamp` is a [UNIX timestamp][unix timestamp] which represents the time at which the
+user balances were retrieved.
+
+[currency code]: http://en.wikipedia.org/wiki/Currency_codes
+[unix timestamp]: http://en.wikipedia.org/wiki/Unix_timestamp
+
 Example:
 
 ```javascript
-{ 
+{
   "root": {
     "sum": "37618",
     "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
