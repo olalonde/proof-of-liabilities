@@ -9,7 +9,7 @@
   },
   {
     "user": "satoshi",
-    "balance": "10000"
+    "balance": "9427"
   },
   {
     "user": "luke-jr",
@@ -17,31 +17,31 @@
   },
   {
     "user": "sipa",
-    "balance": "3027"
+    "balance": "3027.842000"
   },
   {
     "user": "codeshark",
-    "balance": "200"
+    "balance": "200.23"
   },
   {
     "user": "gribble",
-    "balance": "15"
+    "balance": "15.00000001"
   },
   {
     "user": "alice",
-    "balance": "0"
+    "balance": "0.99999999"
   },
   {
     "user": "bob",
-    "balance": "12"
+    "balance": "3712.012345678901"
   },
   {
     "user": "charlie",
-    "balance": "9427"
+    "balance": "10000.1"
   },
   {
     "user": "mark",
-    "balance": "462"
+    "balance": "0.000"
   },
   {
     "user": "anax",
@@ -49,7 +49,7 @@
   },
   {
     "user": "gavin",
-    "balance": "3020"
+    "balance": "3020.00000000"
   },
   {
     "user": "stacy",

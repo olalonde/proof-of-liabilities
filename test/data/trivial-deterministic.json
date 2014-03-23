@@ -1,0 +1,17 @@
+[
+  {
+    "user": "alice",
+    "balance": "12",
+    "nonce": "fc34a533072cc4cc1eb3166513b1eb54"
+  },
+  {
+    "user": "bob",
+    "balance": "0",
+    "nonce": "00a6d4a596b1c008804cef59a595c4ae"
+  },
+  {
+    "user": "satoshi",
+    "balance": "10000.0123456789010000",
+    "nonce": "2109b83997616e3e3d7f393a35038b79"
+  }
+]
