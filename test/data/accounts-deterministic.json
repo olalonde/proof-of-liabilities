@@ -1,22 +1,22 @@
 [
   {
     "user": "olalonde",
-    "balance": "4045.99999999",
+    "balance": "4045",
     "nonce": "9084844fd14f40e88923b674f879fbe0"
   },
   {
     "user": "gmaxwell",
-    "balance": "6905.00000001",
+    "balance": "6905",
     "nonce": "4abec1941ba8423597b37d3195091684"
   },
   {
     "user": "satoshi",
-    "balance": "10000.1",
+    "balance": "9427",
     "nonce": "2109b83997616e3e3d7f393a35038b79"
   },
   {
     "user": "luke-jr",
-    "balance": "300.00000000",
+    "balance": "300",
     "nonce": "d37ebbd5fc5168856edcefbd00b7878c"
   },
   {
@@ -31,27 +31,27 @@
   },
   {
     "user": "gribble",
-    "balance": "15.012345678901",
+    "balance": "15.00000001",
     "nonce": "e1df7cb882ded3fb3128ee9e2987032e"
   },
   {
     "user": "alice",
-    "balance": "0",
+    "balance": "0.99999999",
     "nonce": "fc34a533072cc4cc1eb3166513b1eb54"
   },
   {
     "user": "bob",
-    "balance": "12.34",
+    "balance": "3712.012345678901",
     "nonce": "f5a6d4a596b1c008804cef59a595c4ae"
   },
   {
     "user": "charlie",
-    "balance": "9427",
+    "balance": "10000.1",
     "nonce": "d4bc813f166123157c2a570691b45d6d"
   },
   {
     "user": "mark",
-    "balance": "462",
+    "balance": "0.000",
     "nonce": "505b1112b9a8efe97ce28126c50b9358"
   },
   {
@@ -61,7 +61,7 @@
   },
   {
     "user": "gavin",
-    "balance": "3020",
+    "balance": "3020.00000000",
     "nonce": "00ff2a352f76ea423c1f47287d089bb9"
   },
   {
