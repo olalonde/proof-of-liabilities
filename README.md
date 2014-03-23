@@ -284,8 +284,10 @@ equivalents (which add a fractional part with zeros in all decimal places, or
 which add trailing zeros to an existing fractional part) that still match the
 regex are allowed.
 
-`currency` is the 3 letter [ISO 4217][currency code] currency code or
-`XBT` for bitcoin.
+`currency` is the 3 letter [ISO 4217][currency code] currency code (e.g.
+`USD` for United States dollar). If there is no ISO 4217 currency code for 
+the currency, use the code that Bloomberg uses (e.g. `XBT` for Bitcoin) 
+and otherwise, spell out the full currency name in lowercase (e.g. `namecoin`). 
 
 `timestamp` is a [UNIX timestamp][unix timestamp] which represents the time at which the
 user balances were retrieved.
