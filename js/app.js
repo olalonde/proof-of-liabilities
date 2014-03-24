@@ -281,15 +281,15 @@ function d3format (node, tree) {
 }
 
 function d3ize (selector, lproof_tree) {
-  var width = 700, height = 500;
+  var width = 920, height = 500;
 
   $(selector).empty();
   var svg = d3.select(selector)
     .append('svg:svg')
-      .attr('width', '100%')
+      .attr('width', width)
       .attr('height', height);
 
-  var tree = d3.layout.tree().size([height, width]);
+  var tree = d3.layout.tree().size([height, width - 220]);
 
   var node_data = d3format(lproof_tree.root(), lproof_tree);
 
