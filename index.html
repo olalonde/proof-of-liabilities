@@ -15,6 +15,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/lumen/bootstrap.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/svg.css">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -76,6 +77,9 @@
 
                     <div class="btn-group" data-toggle="buttons">
                       <label class="btn btn-default active">
+                        <input name="format" type="radio" value="d3"> Graph
+                      </label> 
+                      <label class="btn btn-default">
                         <input name="format" type="radio" value="pretty"> Pretty
                       </label> 
                       <label class="btn btn-default">
@@ -104,6 +108,7 @@
                   <div class="col-lg-10 controls">
                     <pre class="json" id="partial_tree_for"></pre>
                     <pre class="pretty" id="partial_tree_for_pretty"></pre>
+                    <pre class="d3" id="partial_tree_for_d3"></pre>
                   </div>
                 </div>
                 <div class="form-group">
@@ -111,6 +116,7 @@
                   <div class="col-lg-10 controls">
                     <pre class="json" id="complete_tree"></pre>
                     <pre class="pretty" id="complete_tree_pretty"></pre>
+                    <pre class="d3" id="complete_tree_d3"></pre>
                   </div>
                 </div>
             </fieldset>
@@ -170,6 +176,7 @@
             </fieldset>
             <fieldset>
               <legend>Prettyfication result</legend>
+              <pre id="pretty_d3" style="display:none"></pre>
               <pre id="pretty_tree" style="display:none"></pre>
               <pre id="pretty_json"></pre>
             </fieldset>
@@ -186,6 +193,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="build/lproof.js"></script>
+    <script src="bower_components/d3/d3.min.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

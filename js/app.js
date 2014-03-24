@@ -154,14 +154,18 @@ $(function () {
 });
 
 // Generate
-$(function () {
-  $('input[name="format"]').on('change', function () {
-    var format = this.value;
-    $('.pretty').toggle();
-    $('.json').toggle();
-  });
+function toggle_format(format) {
+  format = (this.value) ? this.value : format;
+  $('.' + format).show();
+  $('.' + format).siblings().hide();
+}
 
-  $('.json').toggle();
+$(function () {
+  $('input[name="format"]').on('change', toggle_format);
+
+  toggle_format('d3');
+
+  //$('input[name="format"]').trigger('change');
 
   $('#btn_generate').on('click', function (e) {
     e.preventDefault();
@@ -190,6 +194,7 @@ $(function () {
 
     $('#complete_tree').html(serialize(complete_tree));
     $('#complete_tree_pretty').html(complete_tree.prettyPrintStr(format));
+    d3ize('#complete_tree_d3', complete_tree);
     $('#root').html(lproof.serializeRoot(complete_tree));
 
     // Populate select
@@ -215,6 +220,7 @@ $(function () {
     var serialized = JSON.parse(lproof.serializePartialTree(partial_tree));
     $('#partial_tree_for').html(serialize(serialized));
     $('#partial_tree_for_pretty').html(partial_tree.prettyPrintStr(format));
+    d3ize('#partial_tree_for_d3', partial_tree);
     //@hack
     twice(function () {
       $('#partial_tree').html(serialize(serialized));
@@ -256,6 +262,130 @@ $(function () {
   });
 });
 
+function d3format (node, tree) {
+  var n = {};
+
+  n.name = (node.data) ? node.data.sum : '';
+  n.data = node.data;
+  n.children = [];
+
+  var left = tree.left(node);
+  var right = tree.right(node);
+
+  if (left) n.children.push(d3format(left, tree));
+  if (right) n.children.push(d3format(right, tree));
+
+  if (!n.children.length) delete n.children;
+
+  return n;
+}
+
+function d3ize (selector, lproof_tree) {
+  var width = 700, height = 500;
+
+  $(selector).empty();
+  var svg = d3.select(selector)
+    .append('svg:svg')
+      .attr('width', '100%')
+      .attr('height', height);
+
+  var tree = d3.layout.tree().size([height, width]);
+
+  var node_data = d3format(lproof_tree.root(), lproof_tree);
+
+  var nodes = tree.nodes(node_data);
+
+  //var nodes = tree.nodes({
+   //"name": "flare",
+   //"children": [
+    //{
+     //"name": "analytics",
+     //"children": [
+      //{
+       //"name": "cluster",
+       //"children": [
+        //{"name": "AgglomerativeCluster", "size": 3938},
+        //{"name": "CommunityStructure", "size": 3812},
+        //{"name": "MergeEdge", "size": 743}
+       //]
+      //},
+      //{
+       //"name": "graph",
+       //"children": [
+        //{"name": "BetweennessCentrality", "size": 3534},
+        //{"name": "LinkDistance", "size": 5731}
+       //]
+      //}
+     //]
+    //}
+   //]
+  //});
+  var links = tree.links(nodes);
+
+  console.log(nodes);
+  console.log(links);
+
+  var diagonal = d3.svg.diagonal().projection(function (d) {
+    return [d.y, d.x];
+  });
+
+  var link = svg.selectAll('pathlink')
+    .data(links)
+    .enter()
+      .append('svg:path')
+        .attr('class', 'link')
+        .attr('d', diagonal);
+
+  var node = svg.selectAll('g.node')
+    .data(nodes)
+    .enter()
+      .append('svg:g')
+      .attr('transform', function (d) {
+        return 'translate(' + d.y + ',' + d.x + ')';
+      });
+
+  //node.append('svg:circle')
+      //.attr('r', 3.5);
+
+  node.each(function (n) {
+    console.log('node');
+    console.log(node);
+  });
+
+  node.filter(function (d) {
+        return d.data;
+      })
+      .append('svg:text')
+      //.attr('text-anchor', 'middle')
+      .attr('text-anchor', function(d) {
+        // root
+        if (!d.parent)
+          return 'start';
+        // internal
+        if (d.children)
+          return 'middle';
+        // leaf
+        return 'start';
+      })
+      .text(function(d) {
+        var str = '';
+        if (d.data.user) {
+          str += '' + d.data.sum;
+          str += ', ';
+          str += d.data.user;
+          str += ', ';
+          str += d.data.nonce.substr(0, 3) + '..' + d.data.nonce.substr(-3);
+        }
+        else {
+          str += '' + d.data.sum;
+          str += ', ';
+          str += d.data.hash.substr(0, 3) + '..' + d.data.hash.substr(-3);
+        }
+        return str;
+      });
+
+}
+
 // Prettify
 $(function () {
   $('#btn_prettify').on('click', function (e) {
@@ -277,11 +407,15 @@ $(function () {
 
     try {
       partial_tree = lproof.deserializePartialTree($('#ugly_json').val());
-      $('#pretty_tree').html(partial_tree.prettyPrintStr(format));
-      $('#pretty_tree').show();
     }
     catch (err) {
       $('#pretty_tree').hide();
+    }
+    finally {
+      $('#pretty_tree').html(partial_tree.prettyPrintStr(format));
+      $('#pretty_tree').show();
+      d3ize('#pretty_d3', partial_tree);
+      $('#pretty_d3').show();
     }
   });
 });
