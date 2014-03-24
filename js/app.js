@@ -283,6 +283,11 @@ function d3format (node, tree) {
 function d3ize (selector, lproof_tree) {
   var width = 920, height = 500;
 
+  // partial tree can have smaller height
+  if (!lproof_tree.root().data) {
+    height = height / 3;
+  }
+
   $(selector).empty();
   var svg = d3.select(selector)
     .append('svg:svg')
