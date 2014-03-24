@@ -90,7 +90,7 @@ Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 ## Implementations
 
 - Javascript: [olalonde/proof-of-liabilities](#install)
-- Clojure: [zw/PoLtree](ttps://github.com/zw/PoLtree/)
+- Clojure: [zw/PoLtree](https://github.com/zw/PoLtree/)
 - Ruby: [peatio/liability-proof](https://github.com/peatio/liability-proof)
 
 Non interoperable implementations:
@@ -202,11 +202,11 @@ but specifically:
    format but no negative numbers and no 'e' notation).
    This representation **must** be in the shortest possible form allowed by the
    regular expression, achieved by [stripping trailing zero digits][strip] from
-   the fractional part.  The representation **should not** use more decimal
-   places than required to represent the currency's [smallest
-   subunit][subunit]; if the operator's system uses more decimal places, the
-   value **should** be [rounded towards +∞][ceiling] to the next subunit before
-   any use (addition/hashing/serialisation) in this scheme.
+   the fractional part<sup>[[1]](#stz-bug)</sup>.  The representation **should
+   not** use more decimal places than required to represent the currency's
+   [smallest subunit][subunit]; if the operator's system uses more decimal
+   places, the value **should** be [rounded towards +∞][ceiling] to the next
+   subunit before any use (addition/hashing/serialisation) in this scheme.
    **Any conversion performed to produce or consume it [should be done very
    carefully][pmh]**.
    Examples:
@@ -407,7 +407,12 @@ deterministic algorithm:
 This ensures that the root hash for the tree is deterministic and predictable
 which makes tests shareable.
 
+<a name="stz-bug" class="anchor" href="#stz-bug">[1]:</a>
+Note that there's a [bug in `BigDecimal.stripTrailingZeros`][6480539] in
+JDK <8 where `0.000` doesn't change.
+
  [perfect]: https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees
+ [6480539]: https://bugs.openjdk.java.net/browse/JDK-6480539
 
 ### Publishing protocol
 
@@ -415,7 +420,7 @@ See [olalonde/proof-of-solvency](https://github.com/olalonde/proof-of-solvency#l
 
 ### Acknowledgements
 
-- [Greogry Maxwell](https://github.com/gmaxwell) for coming up with the original idea 
+- [Gregory Maxwell](https://github.com/gmaxwell) for coming up with the original idea 
 - [@zw](https://github.com/zw) for co-authoring the specification
 - All [implementers](#implementations)
 
