@@ -89,14 +89,15 @@ Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 
 ## Implementations
 
-Those are other implementations of the Proof of Liabilities scheme but they
-haven't all been tested.
+- Javascript: [olalonde/proof-of-liabilities](#install)
+- Clojure: [zw/PoLtree](ttps://github.com/zw/PoLtree/)
+- Ruby: [peatio/liability-proof](https://github.com/peatio/liability-proof)
 
-Clojure: https://github.com/zw/PoLtree/blob/master/src/uk/me/iwilcox/poltree
+Non interoperable implementations:
 
-Python: https://github.com/ConceptPending/proveit
-
-C++: https://github.com/bifubao/proof_of_reserves
+- Python: [ConceptPending/proveit](https://github.com/ConceptPending/proveit)
+- C++: [bifubao/proof_of_reserves](https://github.com/bifubao/proof_of_reserves),
+[payward/krakendb](https://github.com/payward/krakendb)
 
 ## Specification
 
