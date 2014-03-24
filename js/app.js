@@ -16,6 +16,10 @@ function error (e, tab) {
   $('#' + tab + ' .flash').show(); 
 }
 
+function highlight (obj) {
+  return hljs.highlight('json', obj).value;
+}
+
 function serialize (obj) {
   return JSON.stringify(obj, undefined, 2);
 }
@@ -192,10 +196,10 @@ $(function () {
       $('#expected_root').html(lproof.serializeRoot(complete_tree));
     });
 
-    $('#complete_tree').html(serialize(complete_tree));
+    $('#complete_tree').html(highlight(serialize(complete_tree)));
     $('#complete_tree_pretty').html(complete_tree.prettyPrintStr(format));
     d3ize('#complete_tree_d3', complete_tree);
-    $('#root').html(lproof.serializeRoot(complete_tree));
+    $('#root').html(highlight(lproof.serializeRoot(complete_tree)));
 
     // Populate select
     var html = '';
@@ -218,7 +222,7 @@ $(function () {
       partial_trees[user] = partial_tree;
     }
     var serialized = JSON.parse(lproof.serializePartialTree(partial_tree));
-    $('#partial_tree_for').html(serialize(serialized));
+    $('#partial_tree_for').html(highlight(serialize(serialized)));
     $('#partial_tree_for_pretty').html(partial_tree.prettyPrintStr(format));
     d3ize('#partial_tree_for_d3', partial_tree);
     //@hack
@@ -403,7 +407,7 @@ $(function () {
 
     try {
       pretty_json = JSON.stringify(JSON.parse(ugly_json), null, 2);
-      $('#pretty_json').html(pretty_json);
+      $('#pretty_json').html(highlight(pretty_json));
     }
     catch (err) {
       $('#pretty_json').html('');
