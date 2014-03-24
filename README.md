@@ -201,11 +201,11 @@ but specifically:
    format but no negative numbers and no 'e' notation).
    This representation **must** be in the shortest possible form allowed by the
    regular expression, achieved by [stripping trailing zero digits][strip] from
-   the fractional part.  The representation **should not** use more decimal
-   places than required to represent the currency's [smallest
-   subunit][subunit]; if the operator's system uses more decimal places, the
-   value **should** be [rounded towards +∞][ceiling] to the next subunit before
-   any use (addition/hashing/serialisation) in this scheme.
+   the fractional part<sup>[[1]](#stz-bug)</sup>.  The representation **should
+   not** use more decimal places than required to represent the currency's
+   [smallest subunit][subunit]; if the operator's system uses more decimal
+   places, the value **should** be [rounded towards +∞][ceiling] to the next
+   subunit before any use (addition/hashing/serialisation) in this scheme.
    **Any conversion performed to produce or consume it [should be done very
    carefully][pmh]**.
    Examples:
@@ -406,7 +406,12 @@ deterministic algorithm:
 This ensures that the root hash for the tree is deterministic and predictable
 which makes tests shareable.
 
+<a name="stz-bug" class="anchor" href="#stz-bug">[1]:</a>
+Note that there's a [bug in `BigDecimal.stripTrailingZeros`][6480539] in
+JDK <8 where `0.000` doesn't change.
+
  [perfect]: https://en.wikipedia.org/wiki/Binary_tree#Types_of_binary_trees
+ [6480539]: https://bugs.openjdk.java.net/browse/JDK-6480539
 
 ### Publishing protocol
 
