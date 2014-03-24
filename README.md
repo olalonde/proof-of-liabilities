@@ -90,7 +90,7 @@ Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 ## Implementations
 
 - Javascript: [olalonde/proof-of-liabilities](#install)
-- Clojure: [zw/PoLtree](ttps://github.com/zw/PoLtree/)
+- Clojure: [zw/PoLtree](/zw/PoLtree/)
 - Ruby: [peatio/liability-proof](https://github.com/peatio/liability-proof)
 
 Non interoperable implementations:
@@ -420,7 +420,7 @@ See [olalonde/proof-of-solvency](https://github.com/olalonde/proof-of-solvency#l
 
 ### Acknowledgements
 
-- [Greogry Maxwell](https://github.com/gmaxwell) for coming up with the original idea 
+- [Gregory Maxwell](https://github.com/gmaxwell) for coming up with the original idea 
 - [@zw](https://github.com/zw) for co-authoring the specification
 - All [implementers](#implementations)
 
