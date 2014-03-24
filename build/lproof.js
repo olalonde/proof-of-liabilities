@@ -253,9 +253,9 @@ function deserialize_partial_tree (str) {
 
 function serialize_root (complete_tree, currency) {
   var obj = {
+    root: complete_tree.root().data,
     currency: currency,
-    timestamp: (new Date()).getTime(),
-    root: complete_tree.root().data
+    timestamp: (new Date()).getTime()
   };
   return JSON.stringify(obj);
 }
