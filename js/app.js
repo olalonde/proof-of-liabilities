@@ -175,6 +175,8 @@ $(function () {
     e.preventDefault();
     $('#generate .flash').hide();
 
+    var currency = 'BTC';
+
     complete_tree = null;
     partial_trees = {};
 
@@ -193,13 +195,13 @@ $(function () {
 
     //@hack
     twice(function () {
-      $('#expected_root').html(lproof.serializeRoot(complete_tree));
+      $('#expected_root').html(lproof.serializeRoot(complete_tree, currency));
     });
 
     $('#complete_tree').html(highlight(serialize(complete_tree)));
     $('#complete_tree_pretty').html(complete_tree.prettyPrintStr(format));
     d3ize('#complete_tree_d3', complete_tree);
-    $('#root').html(highlight(lproof.serializeRoot(complete_tree)));
+    $('#root').html(highlight(lproof.serializeRoot(complete_tree, currency)));
 
     // Populate select
     var html = '';
@@ -243,9 +245,12 @@ $(function () {
 
     try {
       var partial_tree = lproof.deserializePartialTree($('#partial_tree').val());
+      var root_obj = JSON.parse($('#expected_root').val());
       var expected_root = lproof.deserializeRoot($('#expected_root').val());
 
       res = lproof.verifyTree(partial_tree, expected_root);
+      res.timestamp = root_obj.timestamp;
+      res.currency = root_obj.currency;
     }
     catch (err) {
       html += '<h4>Verification failed!</h4>';
@@ -257,9 +262,24 @@ $(function () {
     }
 
     html += '<h4>Verification successful!</h4>';
-    html += 'User: ' + res.user;
+
+    function label (val) {
+      return '<div class="col-xs-1" style="font-weight:bold">' + val + '</div> ';
+    }
+
+    if (res.timestamp) {
+      html += label('Time') + new Date(res.timestamp);
+      html += '<br>';
+    }
+
+
+    html += label('User') + res.user;
     html += '<br>';
-    html += 'Balance: ' + res.sum;
+    html += label('Balance') + res.sum;
+
+    if (res.currency) {
+      html += ' ' + res.currency;
+    }
 
     $('#verification').removeClass('alert-danger').addClass('alert-success').html(html);
     $('#verify_results').show();

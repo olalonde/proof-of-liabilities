@@ -251,10 +251,11 @@ function deserialize_partial_tree (str) {
   return tree;
 }
 
-function serialize_root (complete_tree, id) {
+function serialize_root (complete_tree, currency) {
   var obj = {
-    id: id,
-    root: complete_tree.root().data
+    root: complete_tree.root().data,
+    currency: currency,
+    timestamp: (new Date()).getTime()
   };
   return JSON.stringify(obj);
 }
