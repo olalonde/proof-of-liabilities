@@ -44,7 +44,7 @@ function clone (obj) {
 function combine_nodes (left_node, right_node) {
   var n = {};
   n.sum = big(left_node.sum).plus(right_node.sum);
-  n.hash = sha256(n.sum + '' + left_node.hash + '' + right_node.hash);
+  n.hash = sha256(n.sum + '|' + left_node.hash + '|' + right_node.hash);
   return n;
 }
 
