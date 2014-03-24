@@ -14,10 +14,10 @@ function format (node) {
 
   // leaf nodes
   if (data.nonce !== undefined) {
-    return data.value + ', ' + data.user + ', ' + data.nonce;
+    return data.sum + ', ' + data.user + ', ' + data.nonce;
   }
   else {
-    return data.value + ', ' + data.hash;
+    return data.sum + ', ' + data.hash;
   }
 }
 
@@ -32,6 +32,7 @@ program
   .option('-f, --file <file>', 'Which file to use.')
   .option('-h, --human', 'Print in human readable format instead of serializing.')
   .option('--id <id>', 'Identifier for use in blind solvency proof scheme.')
+  .option('--currency <currency>', 'Specify a currency code.', 'BTC')
   .option('-v, --verbose', 'Output debugging information.');
 
 program
@@ -81,19 +82,19 @@ program
 
     if (program.human) {
       console.log('Root hash: ' + root.data.hash);
-      console.log('Root value: ' + root.data.value);
+      console.log('Root sum: ' + root.data.sum);
     }
     else {
-      console.log(JSON.stringify({ root: root.data }));
+      console.log(blproof.serializeRoot(complete_tree, program.currency));
     }
   });
 
 program
   .command('verify')
-  .description('Verify a partial proof tree. Must specify root hash and value. Must specify the partial proof tree file.')
+  .description('Verify a partial proof tree. Must specify root hash and sum. Must specify the partial proof tree file.')
   .option('--root <root_file>', 'File of the root')
   .option('--hash <hash>', 'Hash of root node')
-  .option('--value <value>', 'Value of root node', parseFloat)
+  .option('--sum <value>', 'Sum of root node', parseFloat)
   .action(function (action) {
     if (!program.file) program.help();
 
@@ -108,7 +109,7 @@ program
       root_data = JSON.parse(fs.readFileSync(action.root)).root;
     }
     else {
-      root_data = { value: action.value, hash: action.hash };
+      root_data = { sum: action.sum, hash: action.hash };
     }
 
     try {
@@ -120,7 +121,7 @@ program
       }
 
       console.log('User: ' + user_data.user);
-      console.log('Balance: ' + user_data.value);
+      console.log('Balance: ' + user_data.sum);
 
     }
     catch (e) {
@@ -144,7 +145,7 @@ program
     var complete_tree = blproof.generateCompleteTree(accounts);
 
     complete_tree.prettyPrint(format);
-   
+
     var pt_path = 'partial_trees';
 
     // remove partial_trees/ recurisvely if it exists
@@ -157,7 +158,7 @@ program
         fs.writeFile('complete_tree.json', complete_tree.serializeToArray(), cb);
       },
       function (cb) {
-        fs.writeFile('root.json', blproof.serializeRoot(complete_tree), cb);
+        fs.writeFile('root.json', blproof.serializeRoot(complete_tree, program.currency), cb);
       },
       function (cb) {
         // limit is to limit how many files can be written at the same time
