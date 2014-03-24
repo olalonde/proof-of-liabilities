@@ -413,6 +413,12 @@ which makes tests shareable.
 
 See [olalonde/proof-of-solvency](https://github.com/olalonde/proof-of-solvency#liabilities-proof).
 
+### Acknowledgements
+
+- [Greogry Maxwell](https://github.com/gmaxwell) for coming up with the original idea 
+- [@zw](https://github.com/zw) for co-authoring the specification
+- All [implementers](#implementations)
+
 ## References
 
 - https://iwilcox.me.uk/2014/proving-bitcoin-reserves
