@@ -273,7 +273,7 @@ A JSON object:
     "hash": <JSON string, as described above>
   },
   "currency": <JSON string>,
-  "timestamp": <JSON string>
+  "timestamp": <JSON number>
 }
 ```
 
@@ -290,8 +290,9 @@ regex are allowed.
 the currency, use the code that Bloomberg uses (e.g. `XBT` for Bitcoin) 
 and otherwise, spell out the full currency name in lowercase (e.g. `namecoin`). 
 
-`timestamp` is a [UNIX timestamp][unix timestamp] which represents the time at which the
-user balances were retrieved.
+`timestamp` is a [UNIX timestamp][unix timestamp], which is the number of
+*milliseconds* between Epoch and the time at which the user balances were
+retrieved.
 
 [currency code]: http://en.wikipedia.org/wiki/Currency_codes
 [unix timestamp]: http://en.wikipedia.org/wiki/Unix_timestamp
@@ -303,7 +304,9 @@ Example:
   "root": {
     "sum": "37618",
     "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  }
+  },
+  "currency": "XBT",
+  "timestamp": 1395718369805
 }
 ```
 
