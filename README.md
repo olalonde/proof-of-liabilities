@@ -290,8 +290,9 @@ regex are allowed.
 the currency, use the code that Bloomberg uses (e.g. `XBT` for Bitcoin) 
 and otherwise, spell out the full currency name in lowercase (e.g. `namecoin`). 
 
-`timestamp` is a [UNIX timestamp][unix timestamp] which represents the time at which the
-user balances were retrieved.
+`timestamp` is a [UNIX timestamp][unix timestamp], which is the number of
+*milliseconds* between Epoch and the time at which the user balances were
+retrieved.
 
 [currency code]: http://en.wikipedia.org/wiki/Currency_codes
 [unix timestamp]: http://en.wikipedia.org/wiki/Unix_timestamp
