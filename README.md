@@ -273,7 +273,7 @@ A JSON object:
     "hash": <JSON string, as described above>
   },
   "currency": <JSON string>,
-  "timestamp": <JSON string>
+  "timestamp": <JSON number>
 }
 ```
 
@@ -304,7 +304,9 @@ Example:
   "root": {
     "sum": "37618",
     "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-  }
+  },
+  "currency": "XBT",
+  "timestamp": 1395718369805
 }
 ```
 
