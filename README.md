@@ -92,10 +92,10 @@ Browser build: `browserify index.js --standalone lproof > build/lproof.js`.
 - Javascript: [olalonde/proof-of-liabilities](#install)
 - Clojure: [zw/PoLtree](https://github.com/zw/PoLtree/)
 - Ruby: [peatio/liability-proof](https://github.com/peatio/liability-proof)
+- Python: [ConceptPending/proveit](https://github.com/ConceptPending/proveit)
 
 Non interoperable implementations:
 
-- Python: [ConceptPending/proveit](https://github.com/ConceptPending/proveit)
 - C++: [bifubao/proof_of_reserves](https://github.com/bifubao/proof_of_reserves),
 [payward/krakendb](https://github.com/payward/krakendb)
 
