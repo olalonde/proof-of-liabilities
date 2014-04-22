@@ -47,7 +47,7 @@
             <li class="active"><a href="#generate">Generate</a></li>
             <li><a href="#verify">Verify</a></li>
             <li><a href="#prettify">Prettify</a></li>
-            <li><a href="https://github.com/olalonde/proof-of-liabilities">What is this?</a></li>
+            <li><a href="#what">What is this?</a></li>
           </ul>
           <ul class="nav navbar-nav pull-right">
             <li><a href="http://olalonde.github.io/proof-of-assets">Proof of Assets</a></li>
@@ -184,7 +184,55 @@
             </fieldset>
           </form>
         </div>
+        <div class="tab-pane" id="what">
+          <h1>Proof of Liabilities</h1>
+          <h2>Introduction</h2>
+          <p>Proof of Liabilities (PoL) is a scheme designed to let companies that accept monetary deposits from consumers (e.g. Bitcoin exchanges, gambling websites, online Bitcoin wallets, etc.) prove their total amount of deposits (their liabilities) without compromising the privacy of individual users.</p>
+          <p>The code powering this site is available on this Github repository:
+            <a href="https://github.com/olalonde/proof-of-liabilities">olalonde/proof-of-liabilities</a>
+          </p>
+          <h2>How does it work?</h2>
+          <p>
+            Sites that implement the scheme provide a public root.json file which contains the total amount of liabilites and a hash. They also provide
+            a partialtree.json file to individual users which contains the user's amount and can be used to compute the total liabilities amount and root hash. 
+            If those computed values match those in the public root.json file,
+            it means that the user was included in the proof. To make sure a site is solvent, a user must verify that he was included in the proof
+            and verify that the site's wallet address has enough funds to cover the total liabilities amount.
+          </p>
+          <p>For a more in depth explanation, see the links section below.</p>
+
+          <h2>Exchanges</h2>
+          <ul>
+            <li><a href="http://vaultofsatoshi.com">Vault of Satoshi</a></li>
+            <li><a href="http://peat.io">Peat.io</a></li>
+          </ul>
+          <h2>Implementations</h2>
+          <ul>
+            <li>Javascript: <a href="#install">olalonde/proof-of-liabilities</a>
+            </li>
+            <li>Clojure: <a href="https://github.com/zw/PoLtree/">zw/PoLtree</a>
+            </li>
+            <li>Ruby: <a href="https://github.com/peatio/liability-proof">peatio/liability-proof</a>
+            </li>
+            <li>Python: <a href="https://github.com/ConceptPending/proveit">ConceptPending/proveit</a>
+            </li>
+          </ul>
+          <h2>Links</h2>
+          <ul>
+            <li><a href="https://github.com/olalonde/proof-of-liabilities/blob/master/README.md#specification">Specification</a></li>
+            <li><a href="https://iwilcox.me.uk/2014/proving-bitcoin-reserves">Proving bitcoin reserves</a> (by Zak Wilcox)</li>
+          </ul>
+
+        </div>
       </div>
+
+      <hr>
+      <footer>
+        <p>
+          Built with <span class="glyphicon glyphicon-heart"></span> by <a href="http://www.syskall.com">Olivier Lalonde</a>
+          <span class="pull-right">Powered by <a href="http://pages.github.com">Github Pages</a> &amp; <a href="https://github.com/olalonde/proof-of-liabilities">Github Repository</a></span>
+        </p>
+      </footer>
 
     </div><!-- /.container -->
 
