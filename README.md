@@ -28,8 +28,6 @@ The Proof of Liabilities scheme can be used as part of the broader
   - [Publishing protocol](#publishing-protocol)
 - [References](#references)
 
-Beer fund: **1ECyyu39RtDNAuk3HRCRWwD4syBF2ZGzdx**
-
 
 ## Install
 
