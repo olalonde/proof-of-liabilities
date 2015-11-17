@@ -1,6 +1,6 @@
 {
   "name": "lproof",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "Proof of Liabilities (PoL) library and CLI",
   "main": "index.js",
   "directories": {
