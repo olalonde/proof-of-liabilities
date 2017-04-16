@@ -4,20 +4,43 @@ var should = require('should'),
   Tree = blproof.Tree,
   crypto = require('crypto');
 
-var accounts = require('./data/accounts.json');
-
 function sha256 (data) {
   return crypto.createHash('sha256').update(data).digest('hex');
 }
 
+function parseConfig(name){
+    var data = fs.readFileSync( __dirname  + "/data/" + name);
+    return JSON.parse(data);
+}
+
+function verifyTreeForUser(accounts, user){
+    console.log("accounts: ", JSON.stringify(accounts));
+    var complete_tree = blproof.generateCompleteTree(accounts);
+    var root = complete_tree.root()
+    console.log("root: ", root.data);
+    var partialTree = blproof.extractPartialTree(complete_tree, user);
+    console.log("partial_tree:", partialTree.serialize());
+    var response = {"id":"EmptyGox BTC liabilities", "partial_tree": JSON.parse(partialTree.serialize())}
+    
+    should.ok(root.data.value);
+    // TODO try ptree.fromObjectGraph
+    //var Tree = blproof.Tree;
+    //var ptree = new Tree();
+    //ptree.fromObjectGraph(partialTree);
+    var ptree = blproof.deserializePartialTree(JSON.stringify(response));
+    
+    should.ok(blproof.verifyTree(ptree, root.data));
+}
 // Regression tests
 //
 // @TODO: unit tests, cli tests, etc.
 
+
 describe('Generating complete tree', function () {
+  var accounts = parseConfig('accounts.json');
   describe ('building a complete tree from data/accounts.json file', function () {
     var complete_tree = blproof.generateCompleteTree(accounts);
-
+    console.log("root: ", complete_tree.root().data);
     it('returns an instance of Tree', function () {
       should.ok(complete_tree instanceof Tree);
     });
@@ -210,3 +233,27 @@ describe('Generating complete tree', function () {
     });
   });
 });
+
+describe('NonRegression', function () {
+    describe ('add new tests based on new issue', function () {
+        it('VerifyAccountsOk', function () {
+            var accounts = parseConfig('accounts.json');
+            var user = "mark";
+            verifyTreeForUser(accounts, user);
+        });
+        it('VerifyAccounts2Ok', function () {
+            var accounts = parseConfig('accounts_2.json');
+            var user = "alice@nomail.com"
+                verifyTreeForUser(accounts, user)
+        });
+
+        it('Idempotent', function () {
+            var accounts = parseConfig('accounts.json');
+            var complete_tree1 = blproof.generateCompleteTree(accounts);
+            console.log("Root1: ", complete_tree1.root().data);
+            var complete_tree2 = blproof.generateCompleteTree(accounts);
+            console.log("Root2: ", complete_tree2.root().data);
+            //TODO should be equal ?
+        });
+    })
+})
